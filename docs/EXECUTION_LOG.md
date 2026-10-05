@@ -129,5 +129,21 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - **Issues dispositioned:** B-06 FIXED.
 - **Notes / follow-ups:** Proceed to T1.4 (Validator alignment).
 
+---
+
+## T1.4 — Validator alignment (B-07)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p1-correctness`
+- **VERIFY findings:** Updated `backend/app/validation/validator.py` `validate_plan` function with shared solver predicates: exact demand fulfillment check, supplier capacity and MOQ violation checks, warehouse remaining capacity check, and reporting `overshoot = max(0, filled - net_req)`.
+- **DECISION NEEDED:** None.
+- **Tests added:** None (validator exercised across full suite and invariants).
+- **Tests changed:** None.
+- **Gate G0:** 22 unit tests passed / 9 DB tests skipped (31 collected) · zero spurious replans on solver-feasible plans.
+- **Evidence:** `docs/evidence/T1.4/validator_tests_output.txt`, `docs/evidence/T1.4/git_diff_stat.txt`
+- **Module audit row updated:** `validation/validator.py` invariant verified.
+- **Issues dispositioned:** B-07 FIXED.
+- **Notes / follow-ups:** Proceed to T1.5 (Risk metric split).
+
+
 
 

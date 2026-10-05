@@ -1,0 +1,2 @@
+﻿ backend/app/validation/validator.py | 42 +++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)

@@ -1,0 +1,48 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Gokul\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: E:\Agentic_AI-main\Agentic_AI-main\backend
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.4.31, cov-7.1.0
+collecting ... collected 31 items
+
+backend\tests\test_api.py::test_health SKIPPED (API unavailable: No ...) [  3%]
+backend\tests\test_api.py::test_catalog_has_product_a SKIPPED (API u...) [  6%]
+backend\tests\test_api.py::test_decision_example SKIPPED (API unavai...) [  9%]
+backend\tests\test_api.py::test_whatif_supplier_failure_api SKIPPED      [ 12%]
+backend\tests\test_extended_verification.py::test_zero_net_requirement PASSED [ 16%]
+backend\tests\test_extended_verification.py::test_extreme_demand_infeasible PASSED [ 19%]
+backend\tests\test_extended_verification.py::test_all_whatif_scenarios_build PASSED [ 22%]
+backend\tests\test_extended_verification.py::test_whatif_diff_results PASSED [ 25%]
+backend\tests\test_extended_verification.py::test_natural_language_intent_variations PASSED [ 29%]
+backend\tests\test_extended_verification.py::test_validator_detects_capacity_overflow PASSED [ 32%]
+backend\tests\test_extended_verification.py::test_api_whatif_nonexistent_run_404 SKIPPED [ 35%]
+backend\tests\test_extended_verification.py::test_hitl_approval_workflow SKIPPED [ 38%]
+backend\tests\test_extended_verification.py::test_hitl_double_approval_blocked SKIPPED [ 41%]
+backend\tests\test_extended_verification.py::test_hitl_rejection_triggers_reoptimization SKIPPED [ 45%]
+backend\tests\test_extended_verification.py::test_hitl_override_validates_constraints SKIPPED [ 48%]
+backend\tests\test_forecast.py::test_seasonal_forecast_with_full_history PASSED [ 51%]
+backend\tests\test_forecast.py::test_forecast_short_history PASSED       [ 54%]
+backend\tests\test_forecast.py::test_forecast_empty_history PASSED       [ 58%]
+backend\tests\test_inventory.py::test_no_double_count PASSED             [ 61%]
+backend\tests\test_inventory.py::test_surplus_is_zero PASSED             [ 64%]
+backend\tests\test_inventory.py::test_ss_topup PASSED                    [ 67%]
+backend\tests\test_inventory.py::test_zero_everything PASSED             [ 70%]
+backend\tests\test_pipeline.py::test_synthetic_catalog_sizes PASSED      [ 74%]
+backend\tests\test_pipeline.py::test_order_history_is_seasonal PASSED    [ 77%]
+backend\tests\test_pipeline.py::test_intent_example_query PASSED         [ 80%]
+backend\tests\test_pipeline.py::test_chunk_text PASSED                   [ 83%]
+backend\tests\test_pipeline.py::test_solver_meets_product_a_demand PASSED [ 87%]
+backend\tests\test_pipeline.py::test_solver_does_not_invent_over_capacity PASSED [ 90%]
+backend\tests\test_pipeline.py::test_whatif_supplier_failure_excludes_supplier PASSED [ 93%]
+backend\tests\test_pipeline.py::test_whatif_patch_builder PASSED         [ 96%]
+backend\tests\test_solver_invariants.py::test_200_seeded_solver_invariants PASSED [100%]
+
+============================== warnings summary ===============================
+C:\Users\Gokul\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464
+  C:\Users\Gokul\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_default_fixture_loop_scope
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 22 passed, 9 skipped, 1 warning in 2.09s ===================
