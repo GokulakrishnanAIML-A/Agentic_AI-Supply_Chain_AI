@@ -186,6 +186,86 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - [x] Golden diff fully justified in writing in `docs/evidence/T1.6/golden_diff.md`.
 - [x] `plan_risk` and `disruption_exposure` metric split live in schemas, agents, and what-if diff.
 
+---
+
+## T2.1 — LLM client contract & observability (B-13)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p2-agentic`
+- **VERIFY findings:** Built standardized wrapper `call_structured()` in `backend/app/llm/contract.py`. Captures `used_llm`, `latency_ms`, and `fallback_reason` across every LangGraph node (`parse`, `supervisor`, `rag`, `replan`, `explain`).
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_agentic_integrity.py`
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T2/agentic_tests_output.txt`
+- **Module audit row updated:** `llm/contract.py`, `graph/state.py` verified.
+- **Issues dispositioned:** B-13 FIXED.
+
+---
+
+## T2.2 — Supervisor guard (B-08)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p2-agentic`
+- **VERIFY findings:** Implemented hard supervisor guard in `backend/app/graph/nodes.py`. When a procurement query is processed, `REQUIRED_PROCURE = {"demand", "supplier", "route", "inventory", "risk"}` is guaranteed present in the execution set regardless of LLM omissions or malformed outputs.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_agentic_integrity.py::test_supervisor_guard_property` (50 randomized/adversarial LLM choice tests).
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T2/agentic_tests_output.txt`
+- **Module audit row updated:** `graph/nodes.py` verified.
+- **Issues dispositioned:** B-08 FIXED.
+
+---
+
+## T2.3 — Replan whitelist & transparency (B-03)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p2-agentic`
+- **VERIFY findings:** Replaced unbounded replanning with explicit `Relaxation` schema restricted to closed set (`lead_time`, `low_risk_concentration`, `low_risk_reliability`, `high_risk_exclusion`). Stamped `degraded=True` and appended full relaxation list in state.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_agentic_integrity.py::test_replan_whitelist_and_degraded_flag`.
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T2/agentic_tests_output.txt`
+- **Module audit row updated:** `graph/nodes.py` verified.
+- **Issues dispositioned:** B-03 FIXED.
+
+---
+
+## T2.4 — Explanation faithfulness guard (B-10)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p2-agentic`
+- **VERIFY findings:** Created `backend/app/graph/faithfulness.py`. Checks all extracted numbers from generated explanations against known ground truth facts from OR-Tools solver outputs, entity counts, and demand/risk numbers.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_agentic_integrity.py::test_explanation_faithfulness_guard`.
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T2/agentic_tests_output.txt`
+- **Module audit row updated:** `graph/faithfulness.py` verified.
+- **Issues dispositioned:** B-10 FIXED.
+
+---
+
+## T2.5 — LLM mathematical invariance test (B-13)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p2-agentic`
+- **VERIFY findings:** Proved that solver allocations, unit quantities, line costs, and objective totals are strictly invariant to LLM non-determinism.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_llm_invariance.py::test_llm_cannot_change_solver_numbers`.
+- **Tests changed:** None.
+- **Gate G0:** Invariance test passed in CI suite.
+- **Evidence:** `docs/evidence/T2/agentic_tests_output.txt`
+- **Module audit row updated:** Phase 2 complete.
+- **Issues dispositioned:** B-13 Invariant proven.
+
+---
+
+## PHASE 2 GATE SUMMARY: PASSED ✅
+- [x] Every LLM node reports `used_llm`, `latency_ms`, and `fallback_reason`.
+- [x] Supervisor guard property test passes across 50 randomized cases.
+- [x] Every relaxation emits a `Relaxation` record from the closed whitelist; `degraded=True` tagged.
+- [x] Explanation faithfulness guard active and tested.
+- [x] LLM-cannot-change-numbers mathematical invariance test passing.
+
+
 
 
 

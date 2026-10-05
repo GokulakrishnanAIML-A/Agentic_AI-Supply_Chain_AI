@@ -19,3 +19,7 @@ class GraphState(TypedDict, total=False):
     patch: dict[str, Any]
     replan_count: int
     trace: list[str]
+    llm_metrics: list[dict[str, Any]]
+    relaxations: list[dict[str, Any]]
+    degraded: bool
+
