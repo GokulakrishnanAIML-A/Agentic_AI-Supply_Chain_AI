@@ -99,3 +99,19 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - **Issues dispositioned:** B-01 FIXED.
 - **Notes / follow-ups:** Proceed to T1.2 (Solver formulation audit and invariant testing).
 
+---
+
+## T1.2 — Solver formulation audit & invariant testing (B-02)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p1-correctness`
+- **VERIFY findings:** Audited MILP formulation in `backend/app/optimization/solver.py`. Confirmed binary selection indicators `y[s] = BoolVar()`, linear Big-M bounds on monthly capacity and MOQ, warehouse inbound remaining space constraints, and added explicit route capacity constraints.
+- **DECISION NEEDED:** None (formulation verified and tightened).
+- **Tests added:** `backend/tests/test_solver_invariants.py::test_200_seeded_solver_invariants` (200 seeded random scenarios with randomized demand, supplier outages, route disruptions, and economic multipliers).
+- **Tests changed:** None.
+- **Gate G0:** 200/200 invariant scenarios passed in 1.76s (p95 solve time < 20ms) · all 6 invariants verified.
+- **Evidence:** `docs/evidence/T1.2/solver_invariants_output.txt`, `docs/evidence/T1.2/git_diff_stat.txt`
+- **Module audit row updated:** `optimization/solver.py` invariant verified.
+- **Issues dispositioned:** B-02 FIXED.
+- **Notes / follow-ups:** Proceed to T1.3 (Demand forecast validation & holdout evaluation).
+
+

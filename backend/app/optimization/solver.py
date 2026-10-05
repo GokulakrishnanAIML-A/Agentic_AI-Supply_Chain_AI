@@ -140,6 +140,14 @@ def solve_bundle(
         remaining = max(0, inv.capacity_units - inv.on_hand)
         solver.Add(solver.Sum(vars_) <= remaining)
 
+    # Route capacity constraints
+    by_route: dict[int, list] = {}
+    for (sid, rid), var in x.items():
+        by_route.setdefault(rid, []).append(var)
+    for o, r in lanes:
+        if r.route_id in by_route:
+            solver.Add(solver.Sum(by_route[r.route_id]) <= r.capacity_units)
+
     solver.Add(solver.Sum(x.values()) >= demand)
 
     if enforce_low_risk and integer:
