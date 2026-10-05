@@ -6,11 +6,19 @@ from pydantic import BaseModel, Field
 
 ScenarioType = Literal[
     "demand_increase",
+    "demand_spike",
     "supplier_failure",
+    "supplier_outage",
     "price_increase",
+    "price_hike",
+    "supplier_price_hike",
     "fuel_increase",
+    "fuel_spike",
+    "fuel_price_hike",
     "route_disruption",
+    "lane_disruption",
     "inventory_shortage",
+    "inventory_loss",
 ]
 
 
@@ -33,28 +41,29 @@ class WhatIfPatch(BaseModel):
 
 def build_patch(req: WhatIfRequest) -> WhatIfPatch:
     pct = (req.pct or 0) / 100.0
-    if req.scenario == "demand_increase":
+    s = req.scenario
+    if s in ("demand_increase", "demand_spike"):
         return WhatIfPatch(
             demand_multiplier=1 + (pct or 0.2),
             label=f"Demand +{(req.pct or 20)}%",
         )
-    if req.scenario == "supplier_failure":
+    if s in ("supplier_failure", "supplier_outage"):
         code = req.supplier_code or "SUP-C"
         return WhatIfPatch(failed_supplier_codes=[code], label=f"Supplier failure {code}")
-    if req.scenario == "price_increase":
+    if s in ("price_increase", "price_hike", "supplier_price_hike"):
         return WhatIfPatch(
             price_multiplier=1 + (pct or 0.1),
             label=f"Price +{(req.pct or 10)}%",
         )
-    if req.scenario == "fuel_increase":
+    if s in ("fuel_increase", "fuel_spike", "fuel_price_hike"):
         return WhatIfPatch(
             fuel_multiplier=1 + (pct or 0.15),
             label=f"Fuel +{(req.pct or 15)}%",
         )
-    if req.scenario == "route_disruption":
+    if s in ("route_disruption", "lane_disruption"):
         code = req.route_code or "RT-C-ROT-OC"
         return WhatIfPatch(disrupted_route_codes=[code], label=f"Route disrupted {code}")
-    if req.scenario == "inventory_shortage":
+    if s in ("inventory_shortage", "inventory_loss"):
         return WhatIfPatch(
             inventory_factor=max(0.0, 1 - (pct or 0.5)),
             label=f"Inventory {(req.pct or 50)}% short",

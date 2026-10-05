@@ -112,7 +112,10 @@ export default function App() {
   }
 
   async function onWhatIf() {
-    if (!result) return;
+    if (!result || !result.run_id) {
+      setError("Please generate an initial decision plan before running What-If scenarios.");
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -120,8 +123,8 @@ export default function App() {
         await runWhatIf({
           run_id: result.run_id,
           scenario,
-          pct,
-          supplier_code: supplierCode,
+          pct: pct !== undefined && pct !== null ? Number(pct) : undefined,
+          supplier_code: scenario === "supplier_failure" ? supplierCode : undefined,
         })
       );
     } catch (err) {
@@ -317,10 +320,10 @@ export default function App() {
             <div className="row wrap">
               <select value={scenario} onChange={(e) => setScenario(e.target.value)}>
                 <option value="supplier_failure">Supplier Outage / Failure</option>
-                <option value="demand_spike">Demand Spike (+% percent)</option>
-                <option value="fuel_price_hike">Fuel Price Hike (+% percent)</option>
-                <option value="supplier_price_hike">Supplier Price Hike (+% percent)</option>
-                <option value="inventory_loss">Inventory Loss (-% percent)</option>
+                <option value="demand_increase">Demand Spike (+% percent)</option>
+                <option value="fuel_increase">Fuel Price Hike (+% percent)</option>
+                <option value="price_increase">Supplier Price Hike (+% percent)</option>
+                <option value="inventory_shortage">Inventory Shortage (-% percent)</option>
                 <option value="route_disruption">Route Lane Disruption</option>
               </select>
 
@@ -334,7 +337,7 @@ export default function App() {
                 </select>
               )}
 
-              {scenario.includes("spike") || scenario.includes("hike") || scenario.includes("loss") ? (
+              {scenario.includes("spike") || scenario.includes("hike") || scenario.includes("increase") || scenario.includes("shortage") || scenario.includes("loss") ? (
                 <input
                   type="number"
                   style={{ width: "110px" }}

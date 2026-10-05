@@ -79,6 +79,7 @@ def to_response(
 
     # HITL status
     is_finalized = run.hitl_status in ("APPROVED", "APPROVED_WITH_OVERRIDE")
+    execution_locked = False
     rec_export = dict(rec)
     rec_export["execution_locked"] = False
     rec_export["execution_status"] = "READY"

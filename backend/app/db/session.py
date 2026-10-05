@@ -18,6 +18,7 @@ def init_db() -> None:
     Base.metadata.create_all(bind=engine)
     # Auto-migrate HITL lifecycle columns for existing databases
     _hitl_migrations = [
+        "ALTER TABLE decision_runs ADD COLUMN IF NOT EXISTS parent_run_id INTEGER REFERENCES decision_runs(id)",
         "ALTER TABLE decision_runs ADD COLUMN IF NOT EXISTS hitl_status VARCHAR(32) DEFAULT 'PENDING_REVIEW'",
         "ALTER TABLE decision_runs ADD COLUMN IF NOT EXISTS hitl_reviewed_by VARCHAR(128)",
         "ALTER TABLE decision_runs ADD COLUMN IF NOT EXISTS hitl_reviewed_at TIMESTAMP",
