@@ -144,6 +144,22 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - **Issues dispositioned:** B-07 FIXED.
 - **Notes / follow-ups:** Proceed to T1.5 (Risk metric split).
 
+---
+
+## T1.5 — Risk metric split (B-11)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p1-correctness`
+- **VERIFY findings:** Investigated scenario where excluding low-reliability suppliers shifted mean supplier reliability. Added `plan_risk` (selected supplier risk exposure) and `disruption_exposure` (external incident severity) to `RiskResult` schema, and added contextual explanatory notes to what-if diff results.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_extended_verification.py::test_whatif_diff_results` verifies presence and semantics of split metrics.
+- **Tests changed:** None.
+- **Gate G0:** 22 unit tests passed / 9 DB tests skipped (31 collected) · diff stat restricted to risk.py, schemas.py, engine.py.
+- **Evidence:** `docs/evidence/T1.5/risk_tests_output.txt`, `docs/evidence/T1.5/git_diff_stat.txt`
+- **Module audit row updated:** `agents/risk.py` invariant verified.
+- **Issues dispositioned:** B-11 FIXED.
+- **Notes / follow-ups:** Proceed to T1.6 (Golden diff review and Phase 1 gate).
+
+
 
 
 

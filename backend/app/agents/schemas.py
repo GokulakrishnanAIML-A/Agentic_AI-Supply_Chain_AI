@@ -91,9 +91,12 @@ class RiskDriver(BaseModel):
 
 class RiskResult(BaseModel):
     score: float
+    plan_risk: float = 0.0
+    disruption_exposure: float = 0.0
     drivers: list[RiskDriver]
     fuel_multiplier: float = 1.0
     notes: list[str] = Field(default_factory=list)
+
 
 
 class AgentBundle(BaseModel):

@@ -97,7 +97,7 @@ def run_risk_agent(
             )
 
     rel_part = drivers[0].score_contribution if drivers else 12.0
-    score = min(
+    plan_score = min(
         100.0,
         rel_part
         + event_score
@@ -105,13 +105,20 @@ def run_risk_agent(
         + route_part
         + max(0, fuel_mult - 1) * 25,
     )
+    # Disruption exposure reflects external network disruptions
+    disruption_score = min(100.0, (event_score + wx_score + route_part) * 2.0)
+
     notes = [
         "Risk score is a rubric over database events, reliability, weather and fuel indices.",
+        "plan_risk evaluates selected supplier reliability; disruption_exposure tracks active external incidents.",
         "It is not an LLM-invented number.",
     ]
     return RiskResult(
-        score=round(score, 1),
+        score=round(plan_score, 1),
+        plan_risk=round(plan_score, 1),
+        disruption_exposure=round(disruption_score, 1),
         drivers=drivers,
         fuel_multiplier=fuel_mult,
         notes=notes,
     )
+

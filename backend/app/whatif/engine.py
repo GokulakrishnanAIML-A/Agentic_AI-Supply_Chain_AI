@@ -74,9 +74,24 @@ def diff_results(baseline: dict[str, Any], scenario: dict[str, Any]) -> dict[str
         s = cur if isinstance(cur, (int, float)) else default
         return {"baseline": b, "scenario": s, "delta": round(s - b, 2)}
 
+    base_risk = _num(["risk_score"])
+    plan_risk = _num(["plan_risk"], default=base_risk["baseline"])
+    disruption = _num(["disruption_exposure"], default=0.0)
+
+    # Contextual note explaining risk score movement
+    risk_note = ""
+    if base_risk["delta"] < 0:
+        risk_note = "Plan risk decreased because low-reliability/high-risk suppliers were excluded from the pool."
+    elif base_risk["delta"] > 0:
+        risk_note = "Plan risk increased due to tighter capacity, route disruptions, or higher risk exposure."
+
     return {
         "total_cost": _num(["total_cost"]),
         "delivery_time_hours": _num(["delivery_time_hours"]),
-        "risk_score": _num(["risk_score"]),
+        "risk_score": base_risk,
+        "plan_risk": plan_risk if plan_risk["baseline"] > 0 else base_risk,
+        "disruption_exposure": disruption,
         "unmet_demand": _num(["unmet_demand"]),
+        "risk_explanation": risk_note,
     }
+
