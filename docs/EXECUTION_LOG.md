@@ -159,6 +159,34 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - **Issues dispositioned:** B-11 FIXED.
 - **Notes / follow-ups:** Proceed to T1.6 (Golden diff review and Phase 1 gate).
 
+---
+
+## T1.6 — Golden diff review & Phase 1 Gate
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p1-correctness`
+- **VERIFY findings:** Diffed new solver outputs against T0.2 baseline. All deltas strictly traceable to:
+  1. T1.1: Net requirement shift from 9,470 $\to$ 10,610 (restoring safety stock replenishment).
+  2. T1.2: Addition of explicit route capacity constraints.
+  3. T1.5: Split risk metrics `plan_risk` and `disruption_exposure`.
+- **DECISION NEEDED:** None.
+- **Tests added:** None.
+- **Tests changed:** Regenerated `tests/golden/*.json`.
+- **Gate G0:** All 22 unit tests passed / 9 DB tests skipped · determinism check passed with byte-identical runs.
+- **Evidence:** `docs/evidence/T1.6/golden_diff.md`, `docs/evidence/T1.6/golden_raw_diff.txt`
+- **Module audit row updated:** Phase 1 complete.
+- **Issues dispositioned:** Golden baselines reconciled with verified mathematical formulas.
+
+---
+
+## PHASE 1 GATE SUMMARY: PASSED ✅
+- [x] `net_requirement` tests pass (including `avail < SS` replenishment).
+- [x] Solver invariants: 200/200 seeded random cases pass.
+- [x] Zero spurious replans on solver-feasible plans.
+- [x] Forecast MAPE table (6.49% for active 55/45 blend) + synthetic data caveat documented.
+- [x] Golden diff fully justified in writing in `docs/evidence/T1.6/golden_diff.md`.
+- [x] `plan_risk` and `disruption_exposure` metric split live in schemas, agents, and what-if diff.
+
+
 
 
 

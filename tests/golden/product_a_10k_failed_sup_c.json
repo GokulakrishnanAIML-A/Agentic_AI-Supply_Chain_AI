@@ -30,9 +30,9 @@
     },
     {
       "lead_time_days": 12,
-      "line_cost": 2707.2,
+      "line_cost": 9273.6,
       "mode": "truck",
-      "quantity": 470,
+      "quantity": 1610,
       "reliability_score": 0.96,
       "route_code": "RT-B-ROT-TR",
       "supplier_code": "SUP-B",
@@ -51,10 +51,10 @@
     "Quantities are solver outputs, not LLM estimates.",
     "Low-risk constraints enforced=True"
   ],
-  "procurement_cost": 41422.0,
-  "risk_penalty_cost": 4709.22,
+  "procurement_cost": 47236.0,
+  "risk_penalty_cost": 4999.92,
   "status": "OPTIMAL",
-  "total_cost": 46089.7,
-  "transport_cost": 4667.7,
+  "total_cost": 52656.1,
+  "transport_cost": 5420.1,
   "unmet_demand": 0
 }

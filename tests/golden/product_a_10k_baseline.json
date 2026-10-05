@@ -16,9 +16,9 @@
     },
     {
       "lead_time_days": 22,
-      "line_cost": 15586.51,
+      "line_cost": 19222.66,
       "mode": "ocean",
-      "quantity": 3665,
+      "quantity": 4520,
       "reliability_score": 0.88,
       "route_code": "RT-C-SIN-OC",
       "supplier_code": "SUP-C",
@@ -30,9 +30,9 @@
     },
     {
       "lead_time_days": 12,
-      "line_cost": 1756.8,
+      "line_cost": 3398.4,
       "mode": "truck",
-      "quantity": 305,
+      "quantity": 590,
       "reliability_score": 0.96,
       "route_code": "RT-B-ROT-TR",
       "supplier_code": "SUP-B",
@@ -51,10 +51,10 @@
     "Quantities are solver outputs, not LLM estimates.",
     "Low-risk constraints enforced=True"
   ],
-  "procurement_cost": 38765.75,
-  "risk_penalty_cost": 4793.06,
+  "procurement_cost": 43511.0,
+  "risk_penalty_cost": 5359.5,
   "status": "OPTIMAL",
-  "total_cost": 42868.81,
-  "transport_cost": 4103.06,
+  "total_cost": 48146.56,
+  "transport_cost": 4635.56,
   "unmet_demand": 0
 }

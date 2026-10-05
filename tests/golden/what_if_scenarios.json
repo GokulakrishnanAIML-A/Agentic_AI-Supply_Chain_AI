@@ -6,15 +6,26 @@
         "delta": 0.0,
         "scenario": 668.0
       },
+      "disruption_exposure": {
+        "baseline": 0.0,
+        "delta": 0.0,
+        "scenario": 0.0
+      },
+      "plan_risk": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "risk_explanation": "",
       "risk_score": {
         "baseline": 42.0,
         "delta": 0.0,
         "scenario": 42.0
       },
       "total_cost": {
-        "baseline": 42868.81,
+        "baseline": 48146.56,
         "delta": 9259.2,
-        "scenario": 52128.01
+        "scenario": 57405.76
       },
       "unmet_demand": {
         "baseline": 0,
@@ -34,6 +45,20 @@
     "solver": {
       "allocations": [
         {
+          "lead_time_days": 22,
+          "line_cost": 25601.86,
+          "mode": "ocean",
+          "quantity": 6020,
+          "reliability_score": 0.88,
+          "route_code": "RT-C-SIN-OC",
+          "supplier_code": "SUP-C",
+          "supplier_name": "Chengdu Precision",
+          "transit_hours": 140.0,
+          "transport_cost_per_unit": 0.4028,
+          "unit_price": 3.85,
+          "warehouse_code": "WH-SIN"
+        },
+        {
           "lead_time_days": 18,
           "line_cost": 25525.5,
           "mode": "ocean",
@@ -48,24 +73,10 @@
           "warehouse_code": "WH-SIN"
         },
         {
-          "lead_time_days": 22,
-          "line_cost": 21965.71,
-          "mode": "ocean",
-          "quantity": 5165,
-          "reliability_score": 0.88,
-          "route_code": "RT-C-SIN-OC",
-          "supplier_code": "SUP-C",
-          "supplier_name": "Chengdu Precision",
-          "transit_hours": 140.0,
-          "transport_cost_per_unit": 0.4028,
-          "unit_price": 3.85,
-          "warehouse_code": "WH-SIN"
-        },
-        {
           "lead_time_days": 12,
-          "line_cost": 4636.8,
+          "line_cost": 6278.4,
           "mode": "truck",
-          "quantity": 805,
+          "quantity": 1090,
           "reliability_score": 0.96,
           "route_code": "RT-B-ROT-TR",
           "supplier_code": "SUP-B",
@@ -84,11 +95,11 @@
         "Quantities are solver outputs, not LLM estimates.",
         "Low-risk constraints enforced=True"
       ],
-      "procurement_cost": 47090.75,
-      "risk_penalty_cost": 5786.81,
+      "procurement_cost": 51836.0,
+      "risk_penalty_cost": 6353.25,
       "status": "OPTIMAL",
-      "total_cost": 52128.01,
-      "transport_cost": 5037.26,
+      "total_cost": 57405.76,
+      "transport_cost": 5569.76,
       "unmet_demand": 0
     }
   },
@@ -99,15 +110,26 @@
         "delta": 0.0,
         "scenario": 668.0
       },
+      "disruption_exposure": {
+        "baseline": 0.0,
+        "delta": 0.0,
+        "scenario": 0.0
+      },
+      "plan_risk": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "risk_explanation": "",
       "risk_score": {
         "baseline": 42.0,
         "delta": 0.0,
         "scenario": 42.0
       },
       "total_cost": {
-        "baseline": 42868.81,
-        "delta": 615.11,
-        "scenario": 43483.92
+        "baseline": 48146.56,
+        "delta": 694.96,
+        "scenario": 48841.52
       },
       "unmet_demand": {
         "baseline": 0,
@@ -142,9 +164,9 @@
         },
         {
           "lead_time_days": 22,
-          "line_cost": 15807.88,
+          "line_cost": 19495.66,
           "mode": "ocean",
-          "quantity": 3665,
+          "quantity": 4520,
           "reliability_score": 0.88,
           "route_code": "RT-C-SIN-OC",
           "supplier_code": "SUP-C",
@@ -156,9 +178,9 @@
         },
         {
           "lead_time_days": 12,
-          "line_cost": 1786.99,
+          "line_cost": 3456.81,
           "mode": "truck",
-          "quantity": 305,
+          "quantity": 590,
           "reliability_score": 0.96,
           "route_code": "RT-B-ROT-TR",
           "supplier_code": "SUP-B",
@@ -177,11 +199,11 @@
         "Quantities are solver outputs, not LLM estimates.",
         "Low-risk constraints enforced=True"
       ],
-      "procurement_cost": 38765.75,
-      "risk_penalty_cost": 4793.06,
+      "procurement_cost": 43511.0,
+      "risk_penalty_cost": 5359.5,
       "status": "OPTIMAL",
-      "total_cost": 43483.92,
-      "transport_cost": 4718.17,
+      "total_cost": 48841.52,
+      "transport_cost": 5330.52,
       "unmet_demand": 0
     }
   },
@@ -192,15 +214,26 @@
         "delta": 0.0,
         "scenario": 668.0
       },
+      "disruption_exposure": {
+        "baseline": 0.0,
+        "delta": 0.0,
+        "scenario": 0.0
+      },
+      "plan_risk": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "risk_explanation": "",
       "risk_score": {
         "baseline": 42.0,
         "delta": 0.0,
         "scenario": 42.0
       },
       "total_cost": {
-        "baseline": 42868.81,
-        "delta": 6250.33,
-        "scenario": 49119.14
+        "baseline": 48146.56,
+        "delta": 3125.35,
+        "scenario": 51271.91
       },
       "unmet_demand": {
         "baseline": 0,
@@ -221,9 +254,9 @@
       "allocations": [
         {
           "lead_time_days": 18,
-          "line_cost": 25520.86,
+          "line_cost": 25525.5,
           "mode": "ocean",
-          "quantity": 5499,
+          "quantity": 5500,
           "reliability_score": 0.91,
           "route_code": "RT-A-SIN-OC",
           "supplier_code": "SUP-A",
@@ -235,9 +268,9 @@
         },
         {
           "lead_time_days": 22,
-          "line_cost": 19894.6,
+          "line_cost": 21374.57,
           "mode": "ocean",
-          "quantity": 4678,
+          "quantity": 5026,
           "reliability_score": 0.88,
           "route_code": "RT-C-SIN-OC",
           "supplier_code": "SUP-C",
@@ -249,9 +282,9 @@
         },
         {
           "lead_time_days": 12,
-          "line_cost": 3703.68,
+          "line_cost": 4371.84,
           "mode": "truck",
-          "quantity": 643,
+          "quantity": 759,
           "reliability_score": 0.96,
           "route_code": "RT-B-ROT-TR",
           "supplier_code": "SUP-B",
@@ -270,11 +303,11 @@
         "Quantities are solver outputs, not LLM estimates.",
         "Low-risk constraints enforced=True"
       ],
-      "procurement_cost": 44385.4,
-      "risk_penalty_cost": 5463.79,
+      "procurement_cost": 46321.0,
+      "risk_penalty_cost": 5694.81,
       "status": "OPTIMAL",
-      "total_cost": 49119.14,
-      "transport_cost": 4733.74,
+      "total_cost": 51271.91,
+      "transport_cost": 4950.91,
       "unmet_demand": 0
     }
   },
@@ -285,15 +318,26 @@
         "delta": 0.0,
         "scenario": 668.0
       },
+      "disruption_exposure": {
+        "baseline": 0.0,
+        "delta": 0.0,
+        "scenario": 0.0
+      },
+      "plan_risk": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "risk_explanation": "",
       "risk_score": {
         "baseline": 42.0,
         "delta": 0.0,
         "scenario": 42.0
       },
       "total_cost": {
-        "baseline": 42868.81,
-        "delta": 3876.58,
-        "scenario": 46745.39
+        "baseline": 48146.56,
+        "delta": 4351.1,
+        "scenario": 52497.66
       },
       "unmet_demand": {
         "baseline": 0,
@@ -328,9 +372,9 @@
         },
         {
           "lead_time_days": 22,
-          "line_cost": 16997.54,
+          "line_cost": 20962.86,
           "mode": "ocean",
-          "quantity": 3665,
+          "quantity": 4520,
           "reliability_score": 0.88,
           "route_code": "RT-C-SIN-OC",
           "supplier_code": "SUP-C",
@@ -342,9 +386,9 @@
         },
         {
           "lead_time_days": 12,
-          "line_cost": 1912.35,
+          "line_cost": 3699.3,
           "mode": "truck",
-          "quantity": 305,
+          "quantity": 590,
           "reliability_score": 0.96,
           "route_code": "RT-B-ROT-TR",
           "supplier_code": "SUP-B",
@@ -363,11 +407,11 @@
         "Quantities are solver outputs, not LLM estimates.",
         "Low-risk constraints enforced=True"
       ],
-      "procurement_cost": 42642.32,
-      "risk_penalty_cost": 5272.37,
+      "procurement_cost": 47862.1,
+      "risk_penalty_cost": 5895.45,
       "status": "OPTIMAL",
-      "total_cost": 46745.39,
-      "transport_cost": 4103.06,
+      "total_cost": 52497.66,
+      "transport_cost": 4635.56,
       "unmet_demand": 0
     }
   },
@@ -378,15 +422,26 @@
         "delta": 0.0,
         "scenario": 668.0
       },
+      "disruption_exposure": {
+        "baseline": 0.0,
+        "delta": 0.0,
+        "scenario": 0.0
+      },
+      "plan_risk": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "risk_explanation": "",
       "risk_score": {
         "baseline": 42.0,
         "delta": 0.0,
         "scenario": 42.0
       },
       "total_cost": {
-        "baseline": 42868.81,
+        "baseline": 48146.56,
         "delta": 0.0,
-        "scenario": 42868.81
+        "scenario": 48146.56
       },
       "unmet_demand": {
         "baseline": 0,
@@ -423,9 +478,9 @@
         },
         {
           "lead_time_days": 22,
-          "line_cost": 15586.51,
+          "line_cost": 19222.66,
           "mode": "ocean",
-          "quantity": 3665,
+          "quantity": 4520,
           "reliability_score": 0.88,
           "route_code": "RT-C-SIN-OC",
           "supplier_code": "SUP-C",
@@ -437,9 +492,9 @@
         },
         {
           "lead_time_days": 12,
-          "line_cost": 1756.8,
+          "line_cost": 3398.4,
           "mode": "truck",
-          "quantity": 305,
+          "quantity": 590,
           "reliability_score": 0.96,
           "route_code": "RT-B-ROT-TR",
           "supplier_code": "SUP-B",
@@ -458,11 +513,11 @@
         "Quantities are solver outputs, not LLM estimates.",
         "Low-risk constraints enforced=True"
       ],
-      "procurement_cost": 38765.75,
-      "risk_penalty_cost": 4793.06,
+      "procurement_cost": 43511.0,
+      "risk_penalty_cost": 5359.5,
       "status": "OPTIMAL",
-      "total_cost": 42868.81,
-      "transport_cost": 4103.06,
+      "total_cost": 48146.56,
+      "transport_cost": 4635.56,
       "unmet_demand": 0
     }
   },
@@ -473,15 +528,26 @@
         "delta": -116.0,
         "scenario": 552.0
       },
+      "disruption_exposure": {
+        "baseline": 0.0,
+        "delta": 0.0,
+        "scenario": 0.0
+      },
+      "plan_risk": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "risk_explanation": "",
       "risk_score": {
         "baseline": 42.0,
         "delta": 0.0,
         "scenario": 42.0
       },
       "total_cost": {
-        "baseline": 42868.81,
-        "delta": 3220.89,
-        "scenario": 46089.7
+        "baseline": 48146.56,
+        "delta": 4509.54,
+        "scenario": 52656.1
       },
       "unmet_demand": {
         "baseline": 0,
@@ -532,9 +598,9 @@
         },
         {
           "lead_time_days": 12,
-          "line_cost": 2707.2,
+          "line_cost": 9273.6,
           "mode": "truck",
-          "quantity": 470,
+          "quantity": 1610,
           "reliability_score": 0.96,
           "route_code": "RT-B-ROT-TR",
           "supplier_code": "SUP-B",
@@ -553,11 +619,11 @@
         "Quantities are solver outputs, not LLM estimates.",
         "Low-risk constraints enforced=True"
       ],
-      "procurement_cost": 41422.0,
-      "risk_penalty_cost": 4709.22,
+      "procurement_cost": 47236.0,
+      "risk_penalty_cost": 4999.92,
       "status": "OPTIMAL",
-      "total_cost": 46089.7,
-      "transport_cost": 4667.7,
+      "total_cost": 52656.1,
+      "transport_cost": 5420.1,
       "unmet_demand": 0
     }
   }

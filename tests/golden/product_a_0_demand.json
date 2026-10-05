@@ -1,14 +1,46 @@
 {
-  "allocations": [],
-  "delivery_time_hours": 0.0,
+  "allocations": [
+    {
+      "lead_time_days": 18,
+      "line_cost": 1670.76,
+      "mode": "ocean",
+      "quantity": 360,
+      "reliability_score": 0.91,
+      "route_code": "RT-A-SIN-OC",
+      "supplier_code": "SUP-A",
+      "supplier_name": "Apex Components",
+      "transit_hours": 120.0,
+      "transport_cost_per_unit": 0.441,
+      "unit_price": 4.2,
+      "warehouse_code": "WH-SIN"
+    },
+    {
+      "lead_time_days": 16,
+      "line_cost": 1275.5,
+      "mode": "truck",
+      "quantity": 250,
+      "reliability_score": 0.9,
+      "route_code": "RT-D-MUM-TR",
+      "supplier_code": "SUP-D",
+      "supplier_name": "Delhi Metals",
+      "transit_hours": 36.0,
+      "transport_cost_per_unit": 0.552,
+      "unit_price": 4.55,
+      "warehouse_code": "WH-MUM"
+    }
+  ],
+  "delivery_time_hours": 552.0,
   "infeasibility": null,
   "objective_notes": [
-    "Net requirement is 0; inventory covers demand plus safety stock."
+    "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+    "Objective minimizes procurement + transport + holding + reliability penalty.",
+    "Quantities are solver outputs, not LLM estimates.",
+    "Low-risk constraints enforced=True"
   ],
-  "procurement_cost": 0.0,
-  "risk_penalty_cost": 0.0,
+  "procurement_cost": 2649.5,
+  "risk_penalty_cost": 312.29,
   "status": "OPTIMAL",
-  "total_cost": 0.0,
-  "transport_cost": 0.0,
+  "total_cost": 2946.26,
+  "transport_cost": 296.76,
   "unmet_demand": 0
 }
