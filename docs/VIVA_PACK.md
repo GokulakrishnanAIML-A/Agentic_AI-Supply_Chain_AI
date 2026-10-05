@@ -155,14 +155,16 @@ OR-Tools provides the underlying Mixed-Integer Linear Programming engine (using 
 ---
 
 ### Q20: What was the division of work between inherited boilerplate and your custom hardening?
-**Answer:**
-- **Inherited Boilerplate:** Initial project directory structure, basic FastAPI skeletons, and synthetic CSV datasets.
-- **My Hardening & Engineering:**
-  1. Complete fix of B-01 net requirement calculation and safety stock logic.
-  2. B-02 OR-Tools MILP solver reformulation with binary MOQ indicator variables and warehouse space constraints.
-  3. B-03 Bounded replanning with closed whitelist schemas and `degraded: true` transparency.
-  4. B-07 Invariant validator and shared constraint predicate alignment.
-  5. B-10 Numeric faithfulness guard and hallucination drop mechanism.
-  6. B-11 Decoupled risk metric architecture (`plan_risk` vs `disruption_exposure`).
-  7. B-09 Complete Human-in-the-Loop governance: append-only `decision_events`, reviewer API key auth, structured rejection re-run, full-fidelity override engine, and server-side recommendation lock.
-  8. T4.* 5 reproducible evaluation benchmark harnesses with empirical results stored in `results/*.json` and verifiable `docs/CLAIMS.md`.
+> **[STUDENT PROVENANCE TEMPLATE — REVIEW AND PERSONALIZE IN YOUR OWN WORDS BEFORE YOUR DEFENSE]**
+
+**Answer Outline:**
+- **Inherited Boilerplate:** Initial base repository skeleton, basic FastAPI endpoints structure, and baseline synthetic CSV data generators.
+- **My Personal Engineering & Hardening Contributions:**
+  1. **B-01 Inventory Math:** Diagnosed and corrected the net requirement formula double-counting bug (`max(0, D + SS - Avail)`).
+  2. **B-02 Mathematical Solver:** Hardened OR-Tools MILP formulation with binary $y_s$ variables for non-linear MOQs and warehouse inbound capacity bounds.
+  3. **B-03 Bounded Replanning:** Replaced unbounded replanning with a closed whitelist relaxation schema emitting explicit `degraded: true` audit metadata.
+  4. **B-07 Invariant Validator:** Synchronized validation predicates directly with solver constraints to prevent spurious replan loops.
+  5. **B-10 Faithfulness Guard:** Implemented regex fact-checking preventing LLM numeric hallucinations in explanations.
+  6. **B-09 HITL Governance:** Engineered the append-only `decision_events` ledger, token-derived reviewer identity, structured rejection re-run pipelines, and full-fidelity override evaluator.
+  7. **T4 Empirical Benchmarking:** Built 5 standalone benchmark harnesses producing reproducible JSON outputs across RAG retrieval, solver stress testing, intent parsing, forecasting, and agentic ablations.
+
