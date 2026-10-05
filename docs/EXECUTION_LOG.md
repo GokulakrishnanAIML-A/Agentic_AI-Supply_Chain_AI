@@ -114,4 +114,20 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - **Issues dispositioned:** B-02 FIXED.
 - **Notes / follow-ups:** Proceed to T1.3 (Demand forecast validation & holdout evaluation).
 
+---
+
+## T1.3 — Forecast validation & holdout evaluation (B-06)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p1-correctness`
+- **VERIFY findings:** Validated `backend/app/agents/demand.py`. When user specifies a quantity, that quantity is used as `demand_to_meet`, and a notice is appended if user demand differs by $>25\%$ from statistical forecast. Implemented rolling-origin cross-validation ($h=1, \text{min\_train}=12$) in `scripts/eval_forecast.py` evaluating 8 models across historical orders.
+- **DECISION NEEDED:** Retain active 55% seasonal naive / 45% 3MA blend (achieved 6.49% MAPE on synthetic seasonal series).
+- **Tests added:** `backend/tests/test_forecast.py::{test_seasonal_forecast_with_full_history, test_forecast_short_history, test_forecast_empty_history}`, `scripts/eval_forecast.py`.
+- **Tests changed:** None.
+- **Gate G0:** 3/3 forecast tests passed · `results/forecast.json` generated with full MAPE benchmark table.
+- **Evidence:** `docs/evidence/T1.3/forecast_tests_output.txt`, `docs/evidence/T1.3/git_diff_stat.txt`, `results/forecast.json`
+- **Module audit row updated:** `agents/demand.py` invariant verified.
+- **Issues dispositioned:** B-06 FIXED.
+- **Notes / follow-ups:** Proceed to T1.4 (Validator alignment).
+
+
 

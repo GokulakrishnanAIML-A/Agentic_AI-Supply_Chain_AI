@@ -35,6 +35,13 @@ def run_demand_agent(db: Session, intent: Intent) -> DemandResult:
         "Forecast is computed from synthetic historical orders, not by the LLM.",
         "If the user specified a quantity, that quantity is the demand to meet.",
     ]
+    if requested is not None and forecast > 0:
+        dev = abs(requested - forecast) / forecast
+        if dev > 0.25:
+            notes.append(
+                f"Notice: User-specified demand ({requested:,}) deviates by {dev:.1%} from statistical forecast ({forecast:,})."
+            )
+
     return DemandResult(
         product_id=product.id,
         product_sku=product.sku,

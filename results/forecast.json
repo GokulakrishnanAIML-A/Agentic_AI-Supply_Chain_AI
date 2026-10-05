@@ -1,0 +1,21 @@
+{
+  "name": "forecast_evaluation",
+  "seed": 42,
+  "evaluation_strategy": "rolling_origin_h1_min12",
+  "num_products_evaluated": 10,
+  "mape_percentage_by_method": {
+    "naive_last": 8.2,
+    "seasonal_naive_t12": 5.68,
+    "trailing_3ma": 12.37,
+    "blend_w0.25": 9.55,
+    "blend_w0.50": 6.88,
+    "blend_w0.55": 6.49,
+    "blend_w0.60": 6.16,
+    "blend_w0.75": 5.62
+  },
+  "best_method": "blend_w0.75",
+  "active_method": "blend_w0.55",
+  "active_method_mape_pct": 6.49,
+  "notes": "Evaluation performed using rolling origin (h=1) over 24-month synthetic order histories. Data contains injected seasonal trends; validates forecasting pipeline mechanics.",
+  "status": "OK"
+}

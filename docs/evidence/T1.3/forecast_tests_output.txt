@@ -1,0 +1,20 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Gokul\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: E:\Agentic_AI-main\Agentic_AI-main\backend
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.4.31, cov-7.1.0
+collecting ... collected 3 items
+
+backend\tests\test_forecast.py::test_seasonal_forecast_with_full_history PASSED [ 33%]
+backend\tests\test_forecast.py::test_forecast_short_history PASSED       [ 66%]
+backend\tests\test_forecast.py::test_forecast_empty_history PASSED       [100%]
+
+============================== warnings summary ===============================
+C:\Users\Gokul\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464
+  C:\Users\Gokul\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_default_fixture_loop_scope
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 3 passed, 1 warning in 0.03s =========================
