@@ -101,37 +101,72 @@ export async function fetchCatalog() {
   return res.json();
 }
 
-export async function executeHitlAction(body: {
-  run_id: number;
-  action: string;
-  apiKey?: string;
-  comments?: string;
-  override_allocations?: any[];
-  reject_reason?: {
-    exclude_suppliers?: string[];
-    max_supplier_share?: number;
-    force_low_risk?: boolean;
-    comment?: string;
-  };
-  acknowledge_policy_breach?: boolean;
-}): Promise<DecisionResponse> {
-  const apiKey = body.apiKey || "secret_key_123";
-  const res = await fetch(`${API}/api/v1/decisions/${body.run_id}/hitl`, {
+export async function executeHitlAction(
+  arg1: number | {
+    run_id: number;
+    action: string;
+    apiKey?: string;
+    comments?: string;
+    override_allocations?: any[];
+    reject_reason?: {
+      exclude_suppliers?: string[];
+      max_supplier_share?: number;
+      force_low_risk?: boolean;
+      comment?: string;
+    };
+    acknowledge_policy_breach?: boolean;
+  },
+  actionArg?: string,
+  apiKeyArg?: string,
+  commentsArg?: string,
+  rejectReasonArg?: any,
+  overrideAllocsArg?: any,
+  ackBreachArg?: boolean
+): Promise<DecisionResponse> {
+  let run_id: number;
+  let action: string;
+  let apiKey: string;
+  let comments: string;
+  let override_allocations: any[] | undefined;
+  let reject_reason: any | undefined;
+  let acknowledge_policy_breach: boolean;
+
+  if (typeof arg1 === "object" && arg1 !== null) {
+    run_id = arg1.run_id;
+    action = arg1.action;
+    apiKey = arg1.apiKey || "secret_key_123";
+    comments = arg1.comments || "Reviewed by human planner";
+    override_allocations = arg1.override_allocations;
+    reject_reason = arg1.reject_reason;
+    acknowledge_policy_breach = arg1.acknowledge_policy_breach || false;
+  } else {
+    run_id = Number(arg1);
+    action = actionArg || "approve";
+    apiKey = apiKeyArg || "secret_key_123";
+    comments = commentsArg || "Reviewed by human planner";
+    reject_reason = rejectReasonArg;
+    override_allocations = overrideAllocsArg;
+    acknowledge_policy_breach = ackBreachArg || false;
+  }
+
+  if (isNaN(run_id) || !run_id) {
+    throw new Error(`Invalid run_id: ${run_id}`);
+  }
+
+  const res = await fetch(`${API}/api/v1/decisions/${run_id}/hitl`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-API-Key": apiKey,
     },
     body: JSON.stringify({
-      action: body.action,
-      comments: body.comments || "Reviewed by human planner",
-      override_allocations: body.override_allocations,
-      reject_reason: body.reject_reason,
-      acknowledge_policy_breach: body.acknowledge_policy_breach || false,
+      action,
+      comments,
+      override_allocations,
+      reject_reason,
+      acknowledge_policy_breach,
     }),
   });
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
-
-

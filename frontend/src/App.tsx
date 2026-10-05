@@ -132,7 +132,10 @@ export default function App() {
   }
 
   async function onHitl(action: string) {
-    if (!result) return;
+    if (!result || !result.run_id) {
+      setError("No active decision run available for review");
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -175,10 +178,6 @@ export default function App() {
   }
 
   const badge = hitlBadge(result?.validation?.hitl_status);
-  const isPending = result?.validation?.hitl_status === "PENDING_REVIEW" || !result?.validation?.hitl_status;
-  const isApproved =
-    result?.validation?.hitl_status === "APPROVED" ||
-    result?.validation?.hitl_status === "APPROVED_WITH_OVERRIDE";
 
   return (
     <div className="page">
@@ -189,8 +188,7 @@ export default function App() {
           <h1>SupplyChainAI</h1>
         </div>
         <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
-          <span className="badge">SYNTHETIC DEMO DATA</span>
-          <span className="hint" style={{ fontSize: "0.8rem" }}>
+          <span className="hint" style={{ fontSize: "0.85rem", fontWeight: 600 }}>
             Catalog: {catalog || "Loading..."}
           </span>
         </div>
@@ -498,10 +496,26 @@ export default function App() {
             </section>
           )}
 
+          {/* ── Explainable recommendation & Operational Execution Plan ── */}
+          <section className="panel" style={{ borderLeft: "4px solid #0284c7" }}>
+            <h2>💡 AI Recommendation &amp; Operational Execution Plan</h2>
+            <pre className="reason">{result.explainable_recommendation?.reason || result.explainable_recommendation?.summary || "Allocation plan generated successfully."}</pre>
+            {result.explainable_recommendation?.execution_steps && (
+              <div style={{ marginTop: "14px" }}>
+                <h3 style={{ fontSize: "0.95rem", marginBottom: 8 }}>Execution Steps:</h3>
+                <ul style={{ paddingLeft: 20 }}>
+                  {result.explainable_recommendation.execution_steps.map((st, i) => (
+                    <li key={i} style={{ marginBottom: 6, fontSize: "0.92rem", color: "#334155" }}>{st}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </section>
+
           {/* ── HITL Governance & Authorization Console ── */}
           <section className="panel" style={{ border: `2px solid ${badge.border}` }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
-              <h2>Human-in-the-Loop (HITL) Governance Console</h2>
+              <h2>Human-in-the-Loop (HITL) Governance &amp; Planner Authorization</h2>
               <span
                 style={{
                   background: badge.bg,
@@ -517,218 +531,181 @@ export default function App() {
               </span>
             </div>
 
-            {isPending && (
-              <>
-                <p className="hint" style={{ marginTop: "8px" }}>
-                  This recommendation is in <strong>PENDING_REVIEW</strong>. In accordance with enterprise governance, operational purchase orders are locked until signed off with an authenticated planner key.
+            <div className="row wrap" style={{ marginTop: "14px", gap: "12px" }}>
+              <div style={{ flex: "1 1 200px" }}>
+                <label style={{ fontSize: "0.8rem" }}>Reviewer API Key (Token):</label>
+                <input
+                  type="text"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="e.g. secret_key_123 or key_alice"
+                />
+              </div>
+              <div style={{ flex: "2 1 300px" }}>
+                <label style={{ fontSize: "0.8rem" }}>Planner Audit Justification:</label>
+                <input
+                  type="text"
+                  value={plannerComments}
+                  onChange={(e) => setPlannerComments(e.target.value)}
+                  placeholder="e.g. Approved after reviewing lead times"
+                />
+              </div>
+            </div>
+
+            <div className="row wrap" style={{ marginTop: "14px", gap: "10px" }}>
+              <button
+                type="button"
+                onClick={() => onHitl("approve")}
+                disabled={loading}
+                style={{ backgroundColor: "#15803d", color: "#fff" }}
+              >
+                ✅ Approve Recommendation
+              </button>
+              <button
+                type="button"
+                onClick={() => setRejectMode(!rejectMode)}
+                disabled={loading}
+                style={{ backgroundColor: "#b91c1c", color: "#fff" }}
+              >
+                ❌ Structured Reject...
+              </button>
+              <button
+                type="button"
+                onClick={() => setOverrideMode(!overrideMode)}
+                disabled={loading}
+                className="btn-secondary"
+              >
+                ✏️ Manual Override...
+              </button>
+            </div>
+
+            {/* Structured Rejection Panel */}
+            {rejectMode && (
+              <div
+                style={{
+                  marginTop: "12px",
+                  padding: "14px",
+                  backgroundColor: "#fef2f2",
+                  border: "1px solid #f87171",
+                  borderRadius: "8px",
+                }}
+              >
+                <h4 style={{ margin: "0 0 8px 0", color: "#991b1b" }}>Structured Rejection &amp; Child Run</h4>
+                <p style={{ fontSize: "0.85rem", color: "#7f1d1d", margin: "0 0 10px 0" }}>
+                  Select constraints to apply to the automatically spawned child re-optimization:
                 </p>
-
-                <div className="row wrap" style={{ marginTop: "14px", gap: "12px" }}>
-                  <div style={{ flex: "1 1 200px" }}>
-                    <label style={{ fontSize: "0.8rem" }}>Reviewer API Key (Token):</label>
-                    <input
-                      type="text"
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      placeholder="e.g. secret_key_123 or key_alice"
-                    />
-                  </div>
-                  <div style={{ flex: "2 1 300px" }}>
-                    <label style={{ fontSize: "0.8rem" }}>Planner Audit Justification:</label>
-                    <input
-                      type="text"
-                      value={plannerComments}
-                      onChange={(e) => setPlannerComments(e.target.value)}
-                      placeholder="e.g. Approved after reviewing lead times"
-                    />
-                  </div>
+                <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+                  {["SUP-A", "SUP-B", "SUP-C", "SUP-D", "SUP-E"].map((code) => (
+                    <label key={code} style={{ fontSize: "0.85rem", cursor: "pointer" }}>
+                      <input
+                        type="checkbox"
+                        checked={excludeSupplierList.includes(code)}
+                        onChange={(e) => {
+                          if (e.target.checked) setExcludeSupplierList([...excludeSupplierList, code]);
+                          else setExcludeSupplierList(excludeSupplierList.filter((s) => s !== code));
+                        }}
+                        style={{ marginRight: "4px" }}
+                      />
+                      Exclude {code}
+                    </label>
+                  ))}
                 </div>
-
-                <div className="row wrap" style={{ marginTop: "14px", gap: "10px" }}>
+                <div style={{ marginTop: "8px" }}>
+                  <label style={{ fontSize: "0.85rem" }}>
+                    <input
+                      type="checkbox"
+                      checked={forceLowRisk}
+                      onChange={(e) => setForceLowRisk(e.target.checked)}
+                      style={{ marginRight: "4px" }}
+                    />
+                    Force Low-Risk Suppliers Only
+                  </label>
+                </div>
+                <div style={{ marginTop: "10px" }}>
                   <button
                     type="button"
-                    onClick={() => onHitl("approve")}
-                    disabled={loading}
-                    style={{ backgroundColor: "#15803d", color: "#fff" }}
-                  >
-                    ✅ Approve Recommendation
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRejectMode(!rejectMode)}
+                    onClick={() => onHitl("reject")}
                     disabled={loading}
                     style={{ backgroundColor: "#b91c1c", color: "#fff" }}
                   >
-                    ❌ Structured Reject...
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setOverrideMode(!overrideMode)}
-                    disabled={loading}
-                    className="btn-secondary"
-                  >
-                    ✏️ Manual Override...
+                    Submit Rejection (Spawn Child Run)
                   </button>
                 </div>
-
-                {/* Structured Rejection Panel */}
-                {rejectMode && (
-                  <div
-                    style={{
-                      marginTop: "12px",
-                      padding: "14px",
-                      backgroundColor: "#fef2f2",
-                      border: "1px solid #f87171",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <h4 style={{ margin: "0 0 8px 0", color: "#991b1b" }}>Structured Rejection &amp; Child Run</h4>
-                    <p style={{ fontSize: "0.85rem", color: "#7f1d1d", margin: "0 0 10px 0" }}>
-                      Select constraints to apply to the automatically spawned child re-optimization:
-                    </p>
-                    <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
-                      {["SUP-A", "SUP-B", "SUP-C", "SUP-D", "SUP-E"].map((code) => (
-                        <label key={code} style={{ fontSize: "0.85rem", cursor: "pointer" }}>
-                          <input
-                            type="checkbox"
-                            checked={excludeSupplierList.includes(code)}
-                            onChange={(e) => {
-                              if (e.target.checked) setExcludeSupplierList([...excludeSupplierList, code]);
-                              else setExcludeSupplierList(excludeSupplierList.filter((s) => s !== code));
-                            }}
-                            style={{ marginRight: "4px" }}
-                          />
-                          Exclude {code}
-                        </label>
-                      ))}
-                    </div>
-                    <div style={{ marginTop: "8px" }}>
-                      <label style={{ fontSize: "0.85rem" }}>
-                        <input
-                          type="checkbox"
-                          checked={forceLowRisk}
-                          onChange={(e) => setForceLowRisk(e.target.checked)}
-                          style={{ marginRight: "4px" }}
-                        />
-                        Force Low-Risk Suppliers Only
-                      </label>
-                    </div>
-                    <div style={{ marginTop: "10px" }}>
-                      <button
-                        type="button"
-                        onClick={() => onHitl("reject")}
-                        disabled={loading}
-                        style={{ backgroundColor: "#b91c1c", color: "#fff" }}
-                      >
-                        Submit Rejection (Spawn Child Run)
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Manual Override Panel */}
-                {overrideMode && (
-                  <div
-                    style={{
-                      marginTop: "12px",
-                      padding: "14px",
-                      backgroundColor: "#eff6ff",
-                      border: "1px solid #60a5fa",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <h4 style={{ margin: "0 0 8px 0", color: "#1e40af" }}>Manual Allocation Override</h4>
-                    <p style={{ fontSize: "0.85rem", color: "#1e3a8a", margin: "0 0 10px 0" }}>
-                      Adjust quantities directly. All modifications are validated mathematically against MOQs, supplier capacities, and warehouse space.
-                    </p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      {overrideAllocations.map((alloc, idx) => (
-                        <div key={alloc.supplier_code} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                          <span style={{ width: "90px", fontWeight: 600 }}>{alloc.supplier_code}:</span>
-                          <input
-                            type="number"
-                            value={alloc.units}
-                            onChange={(e) => {
-                              const val = Number(e.target.value);
-                              setOverrideAllocations((prev) =>
-                                prev.map((item, i) => (i === idx ? { ...item, units: val } : item))
-                              );
-                            }}
-                            style={{ width: "120px" }}
-                          />
-                          <span style={{ fontSize: "0.8rem", color: "#475569" }}>units</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div style={{ marginTop: "10px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                      <label style={{ fontSize: "0.85rem" }}>
-                        <input
-                          type="checkbox"
-                          checked={ackBreach}
-                          onChange={(e) => setAckBreach(e.target.checked)}
-                          style={{ marginRight: "4px" }}
-                        />
-                        Acknowledge concentration / policy breach if present
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => onHitl("override")}
-                        disabled={loading}
-                        style={{ backgroundColor: "#1d4ed8", color: "#fff" }}
-                      >
-                        Validate &amp; Save Override
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </>
+              </div>
             )}
 
-            {!isPending && (
+            {/* Manual Override Panel */}
+            {overrideMode && (
               <div
                 style={{
-                  marginTop: "10px",
-                  padding: "12px 16px",
+                  marginTop: "12px",
+                  padding: "14px",
+                  backgroundColor: "#eff6ff",
+                  border: "1px solid #60a5fa",
+                  borderRadius: "8px",
+                }}
+              >
+                <h4 style={{ margin: "0 0 8px 0", color: "#1e40af" }}>Manual Allocation Override</h4>
+                <p style={{ fontSize: "0.85rem", color: "#1e3a8a", margin: "0 0 10px 0" }}>
+                  Adjust quantities directly. All modifications are validated mathematically against MOQs, supplier capacities, and warehouse space.
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {overrideAllocations.map((alloc, idx) => (
+                    <div key={alloc.supplier_code} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                      <span style={{ width: "90px", fontWeight: 600 }}>{alloc.supplier_code}:</span>
+                      <input
+                        type="number"
+                        value={alloc.units}
+                        onChange={(e) => {
+                          const val = Number(e.target.value);
+                          setOverrideAllocations((prev) =>
+                            prev.map((item, i) => (i === idx ? { ...item, units: val } : item))
+                          );
+                        }}
+                        style={{ width: "120px" }}
+                      />
+                      <span style={{ fontSize: "0.8rem", color: "#475569" }}>units</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: "10px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+                  <label style={{ fontSize: "0.85rem" }}>
+                    <input
+                      type="checkbox"
+                      checked={ackBreach}
+                      onChange={(e) => setAckBreach(e.target.checked)}
+                      style={{ marginRight: "4px" }}
+                    />
+                    Acknowledge concentration / policy breach if present
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => onHitl("override")}
+                    disabled={loading}
+                    style={{ backgroundColor: "#1d4ed8", color: "#fff" }}
+                  >
+                    Validate &amp; Save Override
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {result.validation?.hitl_planner && (
+              <div
+                style={{
+                  marginTop: "12px",
+                  padding: "10px 14px",
                   background: badge.bg,
                   border: `1px solid ${badge.border}`,
                   borderRadius: "8px",
                   color: badge.color,
+                  fontSize: "0.9rem",
                 }}
               >
-                <strong>{badge.label}</strong> by{" "}
-                <strong>{result.validation?.hitl_planner || "Authorized Reviewer"}</strong> —{" "}
-                <em>"{result.validation?.hitl_comments || plannerComments}"</em>
+                Reviewed by: <strong>{result.validation.hitl_planner}</strong> — <em>"{result.validation.hitl_comments || plannerComments}"</em>
               </div>
             )}
           </section>
-
-          {/* ── Explainable recommendation & Execution Steps ── */}
-          {isApproved ? (
-            <section className="panel" style={{ borderLeft: "4px solid #22c55e" }}>
-              <h2>✅ Approved Recommendation &amp; Operational Execution Plan</h2>
-              <pre className="reason">{result.explainable_recommendation?.reason || "Execution plan approved."}</pre>
-              {result.explainable_recommendation?.execution_steps && (
-                <div style={{ marginTop: "12px" }}>
-                  <h4 style={{ marginBottom: 6 }}>Execution Steps:</h4>
-                  <ul style={{ paddingLeft: 20 }}>
-                    {result.explainable_recommendation.execution_steps.map((st, i) => (
-                      <li key={i} style={{ marginBottom: 4 }}>{st}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </section>
-          ) : (
-            <section
-              className="panel"
-              style={{ borderLeft: "4px solid #d1d5db", opacity: 0.8 }}
-            >
-              <h2>🔒 Recommendation &amp; Execution Steps (Locked — Awaiting HITL Approval)</h2>
-              <p className="hint">
-                Server-side recommendation lock is active. Downstream action plans and purchase orders will unlock once a planner approves the plan above.
-              </p>
-            </section>
-          )}
 
           {/* ── Retrieved evidence (Hybrid RAG) ── */}
           <section className="panel">

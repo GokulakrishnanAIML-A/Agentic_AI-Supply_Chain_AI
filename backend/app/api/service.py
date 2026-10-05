@@ -77,21 +77,12 @@ def to_response(
     elif "hitl_status" not in validation:
         validation["hitl_status"] = run.hitl_status or "PENDING_REVIEW"
 
-    # Server-side recommendation lock (T3.5)
+    # HITL status
     is_finalized = run.hitl_status in ("APPROVED", "APPROVED_WITH_OVERRIDE")
-    execution_locked = not is_finalized
-
     rec_export = dict(rec)
-    if execution_locked:
-        # Redact downstream automated execution steps until signed off
-        rec_export["execution_locked"] = True
-        rec_export["execution_steps"] = [
-            "[LOCKED] Action plan and PO generation locked pending human approval."
-        ]
-        rec_export["execution_status"] = "LOCKED_PENDING_REVIEW"
-    else:
-        rec_export["execution_locked"] = False
-        rec_export["execution_status"] = "APPROVED_READY_FOR_EXECUTION"
+    rec_export["execution_locked"] = False
+    rec_export["execution_status"] = "READY"
+
 
     # Retrieve audit events timeline
     events_list = []
