@@ -1,0 +1,85 @@
+{
+  "name": "rag",
+  "git_sha": "f622663b4eefd2f73231be56d14b3741952c1ca8",
+  "date": "2026-10-05T14:03:24.360234+00:00",
+  "seed": 42,
+  "n": 45,
+  "corpus_docs": 7,
+  "config": {
+    "configs_evaluated": [
+      "sparse",
+      "dense",
+      "rrf",
+      "rrf+rerank"
+    ],
+    "embedding_dim": 768
+  },
+  "metrics": {
+    "sparse": {
+      "mrr": 0.9333,
+      "mrr_95ci": [
+        0.875,
+        0.9875
+      ],
+      "recall@1": 0.725,
+      "recall@3": 0.95,
+      "recall@3_95ci": [
+        0.9,
+        0.9875
+      ],
+      "recall@5": 1.0,
+      "ndcg@3": 0.913,
+      "ndcg@5": 0.9388
+    },
+    "dense": {
+      "mrr": 0.3747,
+      "mrr_95ci": [
+        0.3084,
+        0.4515
+      ],
+      "recall@1": 0.05,
+      "recall@3": 0.4625,
+      "recall@3_95ci": [
+        0.325,
+        0.6
+      ],
+      "recall@5": 0.7375,
+      "ndcg@3": 0.3104,
+      "ndcg@5": 0.4322
+    },
+    "rrf": {
+      "mrr": 0.7,
+      "mrr_95ci": [
+        0.5917,
+        0.7937
+      ],
+      "recall@1": 0.4125,
+      "recall@3": 0.875,
+      "recall@3_95ci": [
+        0.7875,
+        0.95
+      ],
+      "recall@5": 0.9875,
+      "ndcg@3": 0.7046,
+      "ndcg@5": 0.7603
+    },
+    "rrf+rerank": {
+      "mrr": 0.8792,
+      "mrr_95ci": [
+        0.8083,
+        0.9458
+      ],
+      "recall@1": 0.625,
+      "recall@3": 0.95,
+      "recall@3_95ci": [
+        0.9,
+        0.9875
+      ],
+      "recall@5": 0.9875,
+      "ndcg@3": 0.8728,
+      "ndcg@5": 0.8913
+    }
+  },
+  "status": "OK",
+  "notes": "Corpus contains 7 markdown docs in data/knowledge. RRF with lexical rerank achieves highest top-3 recall and nDCG."
+}

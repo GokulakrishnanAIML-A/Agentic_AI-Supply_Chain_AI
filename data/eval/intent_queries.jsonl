@@ -1,0 +1,100 @@
+{"id": "iq-001", "query": "I need 10,000 units of Product A next month. Find the lowest-cost supply plan with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-002", "query": "Procure 5000 units of Product B for next quarter at minimum risk.", "product": "Product B", "quantity": 5000, "horizon": "next_quarter", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-003", "query": "Order 10k units of PROD-A ASAP lowest cost.", "product": "Product A", "quantity": 10000, "horizon": "urgent", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-004", "query": "We need 20,000 units of Product A next month. Prioritize fast delivery.", "product": "Product A", "quantity": 20000, "horizon": "next_month", "low_risk": false, "objective": "min_time"}
+{"id": "iq-005", "query": "Find supply plan for Product A based on statistical forecast.", "product": "Product A", "quantity": null, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-006", "query": "Purchase 15000 units of Product A with strict low risk parameters next month.", "product": "Product A", "quantity": 15000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-007", "query": "Need 8500 units PROD-B lowest cost next month.", "product": "Product B", "quantity": 8500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-008", "query": "Supply plan for 12,000 pieces of Product A next month minimizing risk.", "product": "Product A", "quantity": 12000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-009", "query": "Get 25000 units of Product A for Q4 lowest cost safe suppliers.", "product": "Product A", "quantity": 25000, "horizon": "next_quarter", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-010", "query": "I need five thousand units of Product A next month with low risk.", "product": "Product A", "quantity": 5000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-011", "query": "Procure 3000 units of PROD-A lowest cost.", "product": "Product A", "quantity": 3000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-012", "query": "Order 7500 units of Product B next month. Ensure high reliability and low risk.", "product": "Product B", "quantity": 7500, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-013", "query": "Need 50k units of Product A urgently.", "product": "Product A", "quantity": 50000, "horizon": "urgent", "low_risk": false, "objective": "min_time"}
+{"id": "iq-014", "query": "Find lowest cost supply plan for 10000 Product A next month.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-015", "query": "What is the optimal replenishment for Product A next month?", "product": "Product A", "quantity": null, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-016", "query": "Source 18,000 units of Product A with minimal disruption risk next month.", "product": "Product A", "quantity": 18000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-017", "query": "Buy 4000 units PROD-A cheapest available.", "product": "Product A", "quantity": 4000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-018", "query": "Require 14000 units of Product A next quarter lowest landed cost.", "product": "Product A", "quantity": 14000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-019", "query": "Plan 6000 units of Product B with low risk suppliers.", "product": "Product B", "quantity": 6000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-020", "query": "Need 10000 units of Product A next month with lowest cost and low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-021", "query": "Procure 2500 units of PROD-B next month.", "product": "Product B", "quantity": 2500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-022", "query": "Order 35,000 units of Product A for next quarter minimizing total cost.", "product": "Product A", "quantity": 35000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-023", "query": "Need 9000 units of Product A urgently with low risk.", "product": "Product A", "quantity": 9000, "horizon": "urgent", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-024", "query": "Optimize supply plan for PROD-A forecast next month.", "product": "Product A", "quantity": null, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-025", "query": "Buy 16,000 units of Product A next month lowest cost.", "product": "Product A", "quantity": 16000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-026", "query": "I need 12000 units of Product A next month. Avoid high risk suppliers.", "product": "Product A", "quantity": 12000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-027", "query": "Get 8000 units of PROD-B next month with lowest cost and low risk.", "product": "Product B", "quantity": 8000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-028", "query": "Procure 22000 units of Product A next quarter lowest cost.", "product": "Product A", "quantity": 22000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-029", "query": "Deliver 15k units of Product A ASAP.", "product": "Product A", "quantity": 15000, "horizon": "urgent", "low_risk": false, "objective": "min_time"}
+{"id": "iq-030", "query": "Order 7000 units of Product A with minimal transit time.", "product": "Product A", "quantity": 7000, "horizon": "next_month", "low_risk": false, "objective": "min_time"}
+{"id": "iq-031", "query": "Source 11000 units of Product A next month lowest cost safe route.", "product": "Product A", "quantity": 11000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-032", "query": "Find supply plan for 4500 units of PROD-B next month.", "product": "Product B", "quantity": 4500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-033", "query": "Need 10,000 units of Product A next month lowest cost low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-034", "query": "Procure 13000 units of Product A next month minimizing risk score.", "product": "Product A", "quantity": 13000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-035", "query": "Plan supply for 30k units of Product A next quarter.", "product": "Product A", "quantity": 30000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-036", "query": "Order 6500 units PROD-A lowest cost next month.", "product": "Product A", "quantity": 6500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-037", "query": "Need 10000 units of Product A next month at minimal cost with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-038", "query": "Source 8000 units of Product B next month with low risk.", "product": "Product B", "quantity": 8000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-039", "query": "Supply plan for 17000 units Product A next month.", "product": "Product A", "quantity": 17000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-040", "query": "Procure 5k units of Product A urgently lowest cost.", "product": "Product A", "quantity": 5000, "horizon": "urgent", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-041", "query": "Need 19000 units of Product A next quarter with minimal risk.", "product": "Product A", "quantity": 19000, "horizon": "next_quarter", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-042", "query": "Order 10000 units of PROD-A lowest cost low risk next month.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-043", "query": "Optimize 12500 units of Product A next month.", "product": "Product A", "quantity": 12500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-044", "query": "Find low risk sourcing for 9500 units of Product A next month.", "product": "Product A", "quantity": 9500, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-045", "query": "Buy 28000 units of Product A next quarter lowest cost.", "product": "Product A", "quantity": 28000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-046", "query": "Need 3500 units of PROD-B next month lowest risk.", "product": "Product B", "quantity": 3500, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-047", "query": "Order 10000 units of Product A next month with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-048", "query": "Procure 14500 units of Product A ASAP.", "product": "Product A", "quantity": 14500, "horizon": "urgent", "low_risk": false, "objective": "min_time"}
+{"id": "iq-049", "query": "Supply plan for 6000 units Product A next month lowest cost.", "product": "Product A", "quantity": 6000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-050", "query": "Source 21000 units of Product A next quarter with low risk.", "product": "Product A", "quantity": 21000, "horizon": "next_quarter", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-051", "query": "I need 10k units of Product A next month low risk lowest cost.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-052", "query": "Procure 4000 units PROD-B next month.", "product": "Product B", "quantity": 4000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-053", "query": "Find 11500 units of Product A next month minimizing lead time.", "product": "Product A", "quantity": 11500, "horizon": "next_month", "low_risk": false, "objective": "min_time"}
+{"id": "iq-054", "query": "Order 10000 units of Product A next month with low risk sourcing.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-055", "query": "Source 13500 units of Product A next month lowest cost.", "product": "Product A", "quantity": 13500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-056", "query": "Need 7200 units of Product A next month with high reliability.", "product": "Product A", "quantity": 7200, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-057", "query": "Buy 26000 units of Product A for Q3 lowest cost.", "product": "Product A", "quantity": 26000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-058", "query": "Order 9000 units of PROD-B lowest cost next month.", "product": "Product B", "quantity": 9000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-059", "query": "Plan 10000 units of Product A next month with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-060", "query": "Procure 16500 units of Product A ASAP lowest cost.", "product": "Product A", "quantity": 16500, "horizon": "urgent", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-061", "query": "Need 8800 units of Product A next month lowest cost.", "product": "Product A", "quantity": 8800, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-062", "query": "Source 10000 units of Product A next month lowest cost low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-063", "query": "Find supply plan for 5500 units of PROD-B next month.", "product": "Product B", "quantity": 5500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-064", "query": "Buy 32000 units of Product A next quarter with minimal risk.", "product": "Product A", "quantity": 32000, "horizon": "next_quarter", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-065", "query": "Order 10500 units of Product A next month.", "product": "Product A", "quantity": 10500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-066", "query": "Procure 10000 units of Product A next month low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-067", "query": "Need 4200 units of Product B next month with low risk.", "product": "Product B", "quantity": 4200, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-068", "query": "Source 17500 units of Product A next month lowest cost.", "product": "Product A", "quantity": 17500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-069", "query": "Order 24000 units of Product A next quarter lowest cost low risk.", "product": "Product A", "quantity": 24000, "horizon": "next_quarter", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-070", "query": "Deliver 8000 units of PROD-A urgently.", "product": "Product A", "quantity": 8000, "horizon": "urgent", "low_risk": false, "objective": "min_time"}
+{"id": "iq-071", "query": "Optimize supply for 10000 units of Product A next month with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-072", "query": "Procure 6200 units of Product B next month.", "product": "Product B", "quantity": 6200, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-073", "query": "Need 15500 units of Product A next month lowest cost.", "product": "Product A", "quantity": 15500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-074", "query": "Buy 10000 units of Product A next month at minimal risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-075", "query": "Source 27000 units of Product A next quarter.", "product": "Product A", "quantity": 27000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-076", "query": "Plan 9200 units of Product A next month with low risk.", "product": "Product A", "quantity": 9200, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-077", "query": "Order 3800 units PROD-B next month lowest cost.", "product": "Product B", "quantity": 3800, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-078", "query": "Procure 10000 units of Product A next month lowest cost and low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-079", "query": "Need 18500 units of Product A next month lowest cost.", "product": "Product A", "quantity": 18500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-080", "query": "Source 4800 units of Product A ASAP with low risk.", "product": "Product A", "quantity": 4800, "horizon": "urgent", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-081", "query": "Buy 29000 units of Product A next quarter lowest cost low risk.", "product": "Product A", "quantity": 29000, "horizon": "next_quarter", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-082", "query": "Order 10000 units of Product A next month.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-083", "query": "Find supply plan for 7800 units of Product B next month with low risk.", "product": "Product B", "quantity": 7800, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-084", "query": "Procure 14000 units of Product A next month with minimal risk.", "product": "Product A", "quantity": 14000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-085", "query": "Need 10000 units of Product A next month with lowest cost and low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-086", "query": "Source 23000 units of Product A next quarter lowest cost.", "product": "Product A", "quantity": 23000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-087", "query": "Deliver 6800 units of PROD-A ASAP lowest cost.", "product": "Product A", "quantity": 6800, "horizon": "urgent", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-088", "query": "Plan 10000 units of Product A next month with high reliability.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-089", "query": "Order 5200 units of Product B next month lowest cost.", "product": "Product B", "quantity": 5200, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-090", "query": "Procure 19500 units of Product A next month lowest cost.", "product": "Product A", "quantity": 19500, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-091", "query": "Need 10000 units of Product A next month with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-092", "query": "Buy 31000 units of Product A next quarter lowest cost low risk.", "product": "Product A", "quantity": 31000, "horizon": "next_quarter", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-093", "query": "Source 8400 units of Product A next month minimizing transit time.", "product": "Product A", "quantity": 8400, "horizon": "next_month", "low_risk": false, "objective": "min_time"}
+{"id": "iq-094", "query": "Order 10000 units of Product A next month lowest cost.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-095", "query": "Procure 4600 units of Product B next month with low risk.", "product": "Product B", "quantity": 4600, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-096", "query": "Need 16000 units of Product A next month lowest risk.", "product": "Product A", "quantity": 16000, "horizon": "next_month", "low_risk": true, "objective": "min_risk"}
+{"id": "iq-097", "query": "Source 20000 units of Product A next quarter lowest cost.", "product": "Product A", "quantity": 20000, "horizon": "next_quarter", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-098", "query": "Deliver 10000 units of Product A next month with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}
+{"id": "iq-099", "query": "Plan 7600 units of PROD-A next month lowest cost.", "product": "Product A", "quantity": 7600, "horizon": "next_month", "low_risk": false, "objective": "min_cost"}
+{"id": "iq-100", "query": "I need 10,000 units of Product A next month. Find the lowest-cost supply plan with low risk.", "product": "Product A", "quantity": 10000, "horizon": "next_month", "low_risk": true, "objective": "min_cost"}

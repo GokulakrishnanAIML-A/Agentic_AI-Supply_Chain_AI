@@ -34,3 +34,14 @@ def unfaithful_numbers(
         if not matched:
             unfaithful.append(num)
     return unfaithful
+
+
+def check_faithfulness(
+    text: str,
+    allowed: set[float],
+    tol: float = 0.5,
+) -> tuple[bool, list[float]]:
+    """Convenience wrapper returning (is_faithful, unfaithful_numbers)."""
+    bad_nums = unfaithful_numbers(text, allowed, tol=tol)
+    return (len(bad_nums) == 0, bad_nums)
+

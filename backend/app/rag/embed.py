@@ -36,11 +36,36 @@ def gemini_embed(texts: list[str]) -> list[list[float]]:
     return vectors
 
 
+_local_model = None
+
+
+def get_local_model():
+    global _local_model
+    if _local_model is None:
+        from sentence_transformers import SentenceTransformer
+
+        # 768-dim production embedding model (local, zero-key)
+        _local_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+    return _local_model
+
+
+def local_embed(texts: list[str]) -> list[list[float]]:
+    model = get_local_model()
+    embeddings = model.encode(texts, normalize_embeddings=True)
+    return [e.tolist() for e in embeddings]
+
+
 def embed_texts(texts: list[str]) -> list[list[float]]:
     provider = settings.effective_embedding_provider
+    if provider == "local":
+        try:
+            return local_embed(texts)
+        except Exception:
+            pass
     if provider == "gemini" and settings.resolved_gemini_key:
         try:
             return gemini_embed(texts)
         except Exception:
             pass
     return [mock_embed(t) for t in texts]
+

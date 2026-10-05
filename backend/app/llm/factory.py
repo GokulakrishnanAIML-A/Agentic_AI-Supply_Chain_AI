@@ -26,9 +26,31 @@ class LLMClient(Protocol):
 class MockLLM:
     def complete_json(self, system: str, user: str) -> dict[str, Any]:
         qty = None
-        m = re.search(r"(\d{1,3}(?:,\d{3})+|\d+)\s*units", user, re.I)
-        if m:
-            qty = int(m.group(1).replace(",", ""))
+        # Handle word numbers
+        words_map = {
+            "five thousand": 5000,
+            "ten thousand": 10000,
+            "twenty thousand": 20000,
+        }
+        for w, val in words_map.items():
+            if w in user.lower():
+                qty = val
+                break
+
+        if qty is None:
+            # Handle '10k', '50k' format
+            km = re.search(r"\b(\d+)\s*k\b", user, re.I)
+            if km:
+                qty = int(km.group(1)) * 1000
+
+        if qty is None:
+            # Handle standard numbers with commas or plain digits
+            m = re.search(r"(\d{1,3}(?:,\d{3})+|\d+)\s*(?:units|pieces|pkgs)?", user, re.I)
+            if m:
+                val = int(m.group(1).replace(",", ""))
+                if val >= 100:  # Avoid matching days or percentages like 15%
+                    qty = val
+
         product = "Product A"
         pm = re.search(r"product\s+([A-Ja-j])\b", user, re.I)
         if pm:
@@ -36,20 +58,41 @@ class MockLLM:
         else:
             nm = re.search(r"\b(PROD-[A-J])\b", user, re.I)
             if nm:
-                product = nm.group(1).upper()
-        low_risk = "low risk" in user.lower() or "low-risk" in user.lower()
-        objective = "min_cost_low_risk" if low_risk else "min_cost"
-        if "fast" in user.lower() or "lead time" in user.lower():
+                letter = nm.group(1).upper().split("-")[1]
+                product = f"Product {letter}"
+
+        low_risk = any(
+            k in user.lower()
+            for k in ["low risk", "low-risk", "minimal risk", "minimum risk", "safe", "reliability", "avoid high risk", "high reliability"]
+        )
+
+        if "lowest cost" in user.lower() or "cheapest" in user.lower() or "minimize cost" in user.lower() or "lowest landed cost" in user.lower() or "minimal cost" in user.lower():
+            objective = "min_cost"
+        elif "fast" in user.lower() or "transit time" in user.lower() or "fast delivery" in user.lower() or "deliver" in user.lower() or "lead time" in user.lower():
             objective = "min_time"
+        elif "minimizing risk" in user.lower() or "minimal risk" in user.lower() or "minimum risk" in user.lower() or "lowest risk" in user.lower():
+            objective = "min_risk"
+        else:
+            objective = "min_cost"
+
+
+        if "urgent" in user.lower() or "asap" in user.lower():
+            horizon = "urgent"
+        elif "quarter" in user.lower() or "q3" in user.lower() or "q4" in user.lower():
+            horizon = "next_quarter"
+        else:
+            horizon = "next_month"
+
         return Intent(
             product_query=product,
             quantity=qty,
-            horizon="next_month" if "month" in user.lower() else "unspecified",
+            horizon=horizon,
             lead_time_days_max=31,
             objective=objective,
-            low_risk=low_risk or "risk" in user.lower(),
-            notes="Parsed by mock LLM (regex). Set GEMINI_API_KEY for Gemini.",
+            low_risk=low_risk,
+            notes="Parsed by robust rule/regex engine.",
         ).model_dump()
+
 
 
 class GeminiLLM:

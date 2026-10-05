@@ -1,0 +1,26 @@
+{
+  "name": "solver",
+  "git_sha": "f622663b4eefd2f73231be56d14b3741952c1ca8",
+  "date": "2026-10-05T14:05:06.043910+00:00",
+  "seed": 42,
+  "n": 50,
+  "config": {
+    "backend": "ortools_CBC",
+    "demand_range": "0.2x - 3.0x (2,000 - 30,000 units)",
+    "fuel_range": "1.0x - 2.0x",
+    "supplier_outages": "0 - 2 suppliers"
+  },
+  "metrics": {
+    "solver_feasibility_rate": 0.76,
+    "greedy_feasibility_rate": 0.76,
+    "solver_hard_violations_per_plan": 0.0,
+    "greedy_violations_per_plan": 0.0,
+    "cost_gap_vs_greedy_pct": -2.79,
+    "infeasible_detection_accuracy": 1.0,
+    "solve_time_ms_p50": 7.02,
+    "solve_time_ms_p95": 14.06,
+    "solve_time_ms_max": 48.87
+  },
+  "status": "OK",
+  "notes": "OR-Tools MILP guarantees 0 hard constraint violations across all feasible plans and achieves superior landed costs vs greedy allocation."
+}

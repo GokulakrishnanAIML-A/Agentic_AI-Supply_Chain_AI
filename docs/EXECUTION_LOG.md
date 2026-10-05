@@ -359,6 +359,116 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - [x] Server-side recommendation lock redacts execution plan until approved; frontend UI updated and builds cleanly (`vite build` 0 errors).
 - [x] 9/9 HITL test suite cases pass; test suite coverage increased to 72%.
 
+---
+
+## T4.1 — Real embeddings & dimension consistency
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Integrated local sentence-transformers (768-dim `all-mpnet-base-v2`) in `backend/app/rag/embed.py`. Retained mock embedder strictly for offline/deterministic fast testing.
+- **DECISION NEEDED:** None.
+- **Tests added:** Ingest and search embedding dimension consistency tests.
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T4/build_report_output.txt`
+- **Module audit row updated:** `rag/embed.py` verified.
+- **Issues dispositioned:** Embedding provider architecture unified.
+
+---
+
+## T4.2 — RAG evaluation set & benchmark harness (B-04)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Built `data/eval/rag_queries.jsonl` (45 queries including domain queries, SKU queries, paraphrases, and negative controls). Implemented `scripts/eval_rag.py` evaluating sparse (BM25), dense (768-dim), RRF, and RRF + lexical rerank with 1,000-resample 95% bootstrap confidence intervals.
+- **DECISION NEEDED:** None.
+- **Tests added:** `scripts/eval_rag.py` -> `results/rag.json`.
+- **Tests changed:** None.
+- **Gate G0:** RRF+Rerank achieved 95.0% Recall@3 and 0.8792 MRR (95% CI: [0.808, 0.946]).
+- **Evidence:** `results/rag.json`, `docs/evidence/T4/build_report_output.txt`
+- **Module audit row updated:** RAG evaluation pipeline verified.
+- **Issues dispositioned:** B-04 empirical RAG benchmarks established.
+
+---
+
+## T4.3 — Solver evaluation & invariants (B-04)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Built `scripts/eval_solver.py` evaluating 50 seeded scenarios with randomized demand spikes (0.2x–3.0x), supplier outages (0–2 failed vendors), and fuel surcharges (1.0x–2.0x) against a greedy cheapest-landed-cost baseline.
+- **DECISION NEEDED:** None.
+- **Tests added:** `scripts/eval_solver.py` -> `results/solver.json`.
+- **Tests changed:** None.
+- **Gate G0:** Solver achieved **0.0 hard constraint violations per plan**, 100% infeasibility detection accuracy, and median solve time p50 of 7.02ms.
+- **Evidence:** `results/solver.json`, `docs/evidence/T4/build_report_output.txt`
+- **Module audit row updated:** Solver evaluation pipeline verified.
+- **Issues dispositioned:** B-04 empirical solver benchmarks established.
+
+---
+
+## T4.4 — Intent-parsing evaluation
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Built `data/eval/intent_queries.jsonl` (100 labeled queries) and `scripts/eval_intent.py`. Tested extraction of product SKU, quantity, horizon, low-risk preference, and optimization objective across colloquial, word-number, and abbreviated user requests.
+- **DECISION NEEDED:** None.
+- **Tests added:** `scripts/eval_intent.py` -> `results/intent.json`.
+- **Tests changed:** None.
+- **Gate G0:** 100% accuracy on Product, Quantity, and Horizon; 95% on Low-Risk; 90% on Objective; 86.0% overall full-query exact match.
+- **Evidence:** `results/intent.json`, `docs/evidence/T4/build_report_output.txt`
+- **Module audit row updated:** Intent evaluation pipeline verified.
+- **Issues dispositioned:** Intent benchmarks established.
+
+---
+
+## T4.5 — Forecast evaluation consolidation
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Executed rolling-origin cross-validation in `scripts/eval_forecast.py` evaluating 8 models.
+- **DECISION NEEDED:** None.
+- **Tests added:** `scripts/eval_forecast.py` -> `results/forecast.json`.
+- **Tests changed:** None.
+- **Gate G0:** Active 55/45 seasonal naive / 3MA blend confirmed at 6.49% MAPE on synthetic seasonal data.
+- **Evidence:** `results/forecast.json`, `docs/evidence/T4/build_report_output.txt`
+- **Module audit row updated:** Forecast evaluation verified.
+- **Issues dispositioned:** Forecast benchmarks consolidated.
+
+---
+
+## T4.6 — Agentic ablations
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Implemented `scripts/eval_ablation.py`. Quantified benefits: Supervisor Guard prevents agent omission (100% vs 12% for unconstrained model), Faithfulness Guard catches 100% of injected numerical hallucinations, and Replan whitelist ensures recovery on tightly-constrained scenarios.
+- **DECISION NEEDED:** None.
+- **Tests added:** `scripts/eval_ablation.py` -> `results/ablation.json`.
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `results/ablation.json`, `docs/evidence/T4/build_report_output.txt`
+- **Module audit row updated:** Agentic ablations verified.
+- **Issues dispositioned:** Agentic design trade-offs empirically measured.
+
+---
+
+## T4.7 — One-command eval & claims register
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p4-eval`
+- **VERIFY findings:** Built `Makefile`, `scripts/build_report.py`, `docs/CLAIMS.md`, and compiled `docs/EVALUATION_REPORT.md`. All quantitative claims C-01 through C-12 audited and verified against `results/*.json`.
+- **DECISION NEEDED:** None.
+- **Tests added:** `scripts/build_report.py`, `Makefile`.
+- **Tests changed:** None.
+- **Gate G0:** `python scripts/build_report.py` audits 12/12 claims with 100% pass rate.
+- **Evidence:** `docs/CLAIMS.md`, `docs/EVALUATION_REPORT.md`, `docs/evidence/T4/build_report_output.txt`, `docs/evidence/T4/git_diff_stat.txt`
+- **Module audit row updated:** Phase 4 complete.
+- **Issues dispositioned:** Claims register and evaluation report completed.
+
+---
+
+## PHASE 4 GATE SUMMARY: PASSED ✅
+- [x] All 5 evaluation benchmarks generated: `rag.json`, `solver.json`, `intent.json`, `forecast.json`, `ablation.json`.
+- [x] Solver guarantees 0.0 hard constraint violations and p50 solve time under 10ms.
+- [x] RAG hybrid RRF+rerank achieves 95.0% Recall@3 with 95% bootstrap confidence intervals.
+- [x] Intent parser achieves 100% field accuracy on SKU/Quantity/Horizon and 86% overall exact match.
+- [x] Agentic ablations demonstrate 100% hallucination catch rate and 100% complete agent execution.
+- [x] `docs/CLAIMS.md` audits 12/12 claims with zero discrepancies against raw JSON results.
+- [x] `docs/EVALUATION_REPORT.md` generated cleanly.
+
+
 
 
 

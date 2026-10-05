@@ -1,0 +1,45 @@
+{"id": "rag-01", "query": "What is the safety stock policy and formula for Product A?", "relevant_doc_ids": ["inventory_safety_stock.md"]}
+{"id": "rag-02", "query": "How is the net requirement calculated when inventory is on hand?", "relevant_doc_ids": ["inventory_safety_stock.md"]}
+{"id": "rag-03", "query": "Is holding cost taken from the database or estimated?", "relevant_doc_ids": ["inventory_safety_stock.md"]}
+{"id": "rag-04", "query": "How many days of demand does safety stock cover across distribution centers?", "relevant_doc_ids": ["inventory_safety_stock.md"]}
+{"id": "rag-05", "query": "Is reorder point a hard constraint in the solver?", "relevant_doc_ids": ["inventory_safety_stock.md"]}
+{"id": "rag-06", "query": "What is the maximum allocation percentage allowed for a single supplier on critical SKUs?", "relevant_doc_ids": ["supplier_sourcing_policy.md"]}
+{"id": "rag-07", "query": "When is dual sourcing mandatory for Product A?", "relevant_doc_ids": ["supplier_sourcing_policy.md"]}
+{"id": "rag-08", "query": "What reliability score threshold is preferred for low-risk sourcing?", "relevant_doc_ids": ["supplier_sourcing_policy.md", "risk_scoring.md"]}
+{"id": "rag-09", "query": "Which suppliers are designated as low-risk European sources?", "relevant_doc_ids": ["supplier_sourcing_policy.md"]}
+{"id": "rag-10", "query": "What are the risks associated with ocean lanes from Apex Components in Vietnam?", "relevant_doc_ids": ["supplier_sourcing_policy.md", "disruption_playbook.md"]}
+{"id": "rag-11", "query": "How is fuel surcharge applied to transport costs in what-if scenarios?", "relevant_doc_ids": ["fuel_surcharge_policy.md", "transport_mode_guide.md"]}
+{"id": "rag-12", "query": "Does fuel surcharge increase the supplier unit procurement price?", "relevant_doc_ids": ["fuel_surcharge_policy.md"]}
+{"id": "rag-13", "query": "Where are marine fuel index and diesel index observations stored?", "relevant_doc_ids": ["fuel_surcharge_policy.md"]}
+{"id": "rag-14", "query": "What is the formula for transport cost with fuel factor?", "relevant_doc_ids": ["fuel_surcharge_policy.md"]}
+{"id": "rag-15", "query": "When should air freight mode be selected over ocean or truck?", "relevant_doc_ids": ["transport_mode_guide.md"]}
+{"id": "rag-16", "query": "What is typical transit time for ocean freight between Asia and Europe/US?", "relevant_doc_ids": ["transport_mode_guide.md"]}
+{"id": "rag-17", "query": "How does Rotterdam port berth congestion affect truck shipments vs ocean?", "relevant_doc_ids": ["disruption_playbook.md", "transport_mode_guide.md"]}
+{"id": "rag-18", "query": "Are routes with disrupted status feasible in the optimizer?", "relevant_doc_ids": ["transport_mode_guide.md"]}
+{"id": "rag-19", "query": "What active weather disruption exists in the South China Sea / Hai Phong?", "relevant_doc_ids": ["disruption_playbook.md"]}
+{"id": "rag-20", "query": "What is the current quality status and policy for Gulf Manufacturing (SUP-G)?", "relevant_doc_ids": ["disruption_playbook.md"]}
+{"id": "rag-21", "query": "How is supplier failure handled in what-if re-optimization?", "relevant_doc_ids": ["disruption_playbook.md"]}
+{"id": "rag-22", "query": "What are the specifications and typical monthly demand for SKU PROD-A?", "relevant_doc_ids": ["product_a_brief.md"]}
+{"id": "rag-23", "query": "When user specifies 10000 units, should forecast replace the user quantity?", "relevant_doc_ids": ["product_a_brief.md"]}
+{"id": "rag-24", "query": "How is planning horizon defined for a next month request?", "relevant_doc_ids": ["product_a_brief.md", "supplier_sourcing_policy.md"]}
+{"id": "rag-25", "query": "What are the weightings used in composite risk scoring?", "relevant_doc_ids": ["risk_scoring.md"]}
+{"id": "rag-26", "query": "How does the mathematical solver penalize low supplier reliability in the objective function?", "relevant_doc_ids": ["risk_scoring.md"]}
+{"id": "rag-27", "query": "What is the maximum allowed allocation for high-risk suppliers under low-risk preferences?", "relevant_doc_ids": ["risk_scoring.md", "supplier_sourcing_policy.md"]}
+{"id": "rag-28", "query": "How is concentration risk measured in composite risk scoring?", "relevant_doc_ids": ["risk_scoring.md"]}
+{"id": "rag-29", "query": "Where do published supplier offer facts like price, capacity, and MOQ live?", "relevant_doc_ids": ["product_a_brief.md", "supplier_sourcing_policy.md"]}
+{"id": "rag-30", "query": "Can the optimizer buy more than the net requirement?", "relevant_doc_ids": ["inventory_safety_stock.md"]}
+{"id": "rag-31", "query": "What is the policy regarding Baltic Parts (SUP-B) reliability?", "relevant_doc_ids": ["supplier_sourcing_policy.md", "disruption_playbook.md"]}
+{"id": "rag-32", "query": "How does typhoon window affect RT-A-ROT-OC route?", "relevant_doc_ids": ["disruption_playbook.md", "supplier_sourcing_policy.md"]}
+{"id": "rag-33", "query": "What are the hard constraints for warehouse inbound allocation?", "relevant_doc_ids": ["inventory_safety_stock.md", "transport_mode_guide.md"]}
+{"id": "rag-34", "query": "Does marine fuel index trigger an ad-hoc solver calculation?", "relevant_doc_ids": ["fuel_surcharge_policy.md", "disruption_playbook.md"]}
+{"id": "rag-35", "query": "How does the solver treat open high-severity disruption events on suppliers?", "relevant_doc_ids": ["supplier_sourcing_policy.md"]}
+{"id": "rag-36", "query": "What is the penalty cost multiplier RISK_PENALTY_WEIGHT?", "relevant_doc_ids": ["risk_scoring.md"]}
+{"id": "rag-37", "query": "Which distribution centers hold inventory for Product A?", "relevant_doc_ids": ["inventory_safety_stock.md", "product_a_brief.md"]}
+{"id": "rag-38", "query": "How is diesel index used in truck transportation?", "relevant_doc_ids": ["transport_mode_guide.md", "fuel_surcharge_policy.md"]}
+{"id": "rag-39", "query": "What is the mitigation plan when Rotterdam port experiences berth congestion?", "relevant_doc_ids": ["disruption_playbook.md"]}
+{"id": "rag-40", "query": "Can language models compute landed route costs directly without the database?", "relevant_doc_ids": ["transport_mode_guide.md", "fuel_surcharge_policy.md"]}
+{"id": "rag-41", "query": "What is the exchange rate between Japanese Yen and Euro in Tokyo?", "relevant_doc_ids": []}
+{"id": "rag-42", "query": "How do I reset my Windows account password in active directory?", "relevant_doc_ids": []}
+{"id": "rag-43", "query": "What is the recipe for chicken tikka masala?", "relevant_doc_ids": []}
+{"id": "rag-44", "query": "What are the latest stock prices of Apple and Microsoft on NASDAQ?", "relevant_doc_ids": []}
+{"id": "rag-45", "query": "Who won the FIFA World Cup in 2022?", "relevant_doc_ids": []}

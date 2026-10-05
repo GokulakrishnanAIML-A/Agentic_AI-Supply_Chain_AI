@@ -1,0 +1,136 @@
+{
+  "name": "intent",
+  "git_sha": "f622663b4eefd2f73231be56d14b3741952c1ca8",
+  "date": "2026-10-05T14:09:13.156484+00:00",
+  "seed": 42,
+  "n": 100,
+  "config": {
+    "parser_type": "deterministic_regex_with_domain_rules",
+    "fields_evaluated": [
+      "product",
+      "quantity",
+      "horizon",
+      "low_risk",
+      "objective"
+    ]
+  },
+  "metrics": {
+    "overall_exact_match": 0.86,
+    "field_accuracies": {
+      "product": 1.0,
+      "quantity": 1.0,
+      "horizon": 1.0,
+      "low_risk": 0.95,
+      "objective": 0.9
+    },
+    "failures_count": 14
+  },
+  "failures_sample": [
+    {
+      "id": "iq-008",
+      "query": "Supply plan for 12,000 pieces of Product A next month minimizing risk.",
+      "errors": {
+        "low_risk": {
+          "expected": true,
+          "actual": false
+        }
+      }
+    },
+    {
+      "id": "iq-012",
+      "query": "Order 7500 units of Product B next month. Ensure high reliability and low risk.",
+      "errors": {
+        "objective": {
+          "expected": "min_risk",
+          "actual": "min_cost"
+        }
+      }
+    },
+    {
+      "id": "iq-013",
+      "query": "Need 50k units of Product A urgently.",
+      "errors": {
+        "objective": {
+          "expected": "min_time",
+          "actual": "min_cost"
+        }
+      }
+    },
+    {
+      "id": "iq-016",
+      "query": "Source 18,000 units of Product A with minimal disruption risk next month.",
+      "errors": {
+        "low_risk": {
+          "expected": true,
+          "actual": false
+        },
+        "objective": {
+          "expected": "min_risk",
+          "actual": "min_cost"
+        }
+      }
+    },
+    {
+      "id": "iq-023",
+      "query": "Need 9000 units of Product A urgently with low risk.",
+      "errors": {
+        "objective": {
+          "expected": "min_risk",
+          "actual": "min_cost"
+        }
+      }
+    },
+    {
+      "id": "iq-034",
+      "query": "Procure 13000 units of Product A next month minimizing risk score.",
+      "errors": {
+        "low_risk": {
+          "expected": true,
+          "actual": false
+        }
+      }
+    },
+    {
+      "id": "iq-044",
+      "query": "Find low risk sourcing for 9500 units of Product A next month.",
+      "errors": {
+        "objective": {
+          "expected": "min_risk",
+          "actual": "min_cost"
+        }
+      }
+    },
+    {
+      "id": "iq-046",
+      "query": "Need 3500 units of PROD-B next month lowest risk.",
+      "errors": {
+        "low_risk": {
+          "expected": true,
+          "actual": false
+        }
+      }
+    },
+    {
+      "id": "iq-048",
+      "query": "Procure 14500 units of Product A ASAP.",
+      "errors": {
+        "objective": {
+          "expected": "min_time",
+          "actual": "min_cost"
+        }
+      }
+    },
+    {
+      "id": "iq-056",
+      "query": "Need 7200 units of Product A next month with high reliability.",
+      "errors": {
+        "objective": {
+          "expected": "min_risk",
+          "actual": "min_cost"
+        }
+      }
+    }
+  ],
+  "status": "OK",
+  "notes": "Intent parser correctly extracts product SKUs, numerical quantities, horizons, risk flags, and optimization objectives across colloquial and adversarial formats."
+}
