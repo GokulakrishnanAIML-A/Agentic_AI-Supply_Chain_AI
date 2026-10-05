@@ -1,0 +1,60 @@
+{
+  "allocations": [
+    {
+      "lead_time_days": 18,
+      "line_cost": 25525.5,
+      "mode": "ocean",
+      "quantity": 5500,
+      "reliability_score": 0.91,
+      "route_code": "RT-A-SIN-OC",
+      "supplier_code": "SUP-A",
+      "supplier_name": "Apex Components",
+      "transit_hours": 120.0,
+      "transport_cost_per_unit": 0.441,
+      "unit_price": 4.2,
+      "warehouse_code": "WH-SIN"
+    },
+    {
+      "lead_time_days": 16,
+      "line_cost": 17857.0,
+      "mode": "truck",
+      "quantity": 3500,
+      "reliability_score": 0.9,
+      "route_code": "RT-D-MUM-TR",
+      "supplier_code": "SUP-D",
+      "supplier_name": "Delhi Metals",
+      "transit_hours": 36.0,
+      "transport_cost_per_unit": 0.552,
+      "unit_price": 4.55,
+      "warehouse_code": "WH-MUM"
+    },
+    {
+      "lead_time_days": 12,
+      "line_cost": 2707.2,
+      "mode": "truck",
+      "quantity": 470,
+      "reliability_score": 0.96,
+      "route_code": "RT-B-ROT-TR",
+      "supplier_code": "SUP-B",
+      "supplier_name": "Baltic Parts",
+      "transit_hours": 18.0,
+      "transport_cost_per_unit": 0.66,
+      "unit_price": 5.1,
+      "warehouse_code": "WH-ROT"
+    }
+  ],
+  "delivery_time_hours": 552.0,
+  "infeasibility": null,
+  "objective_notes": [
+    "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+    "Objective minimizes procurement + transport + holding + reliability penalty.",
+    "Quantities are solver outputs, not LLM estimates.",
+    "Low-risk constraints enforced=True"
+  ],
+  "procurement_cost": 41422.0,
+  "risk_penalty_cost": 4709.22,
+  "status": "OPTIMAL",
+  "total_cost": 46089.7,
+  "transport_cost": 4667.7,
+  "unmet_demand": 0
+}

@@ -1,0 +1,1 @@
+EMPTY DIFF — Byte-identical output across runs (determinism proven).

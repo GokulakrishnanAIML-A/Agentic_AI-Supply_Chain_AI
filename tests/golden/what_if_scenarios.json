@@ -1,0 +1,564 @@
+{
+  "demand_increase": {
+    "diff": {
+      "delivery_time_hours": {
+        "baseline": 668.0,
+        "delta": 0.0,
+        "scenario": 668.0
+      },
+      "risk_score": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "total_cost": {
+        "baseline": 42868.81,
+        "delta": 9259.2,
+        "scenario": 52128.01
+      },
+      "unmet_demand": {
+        "baseline": 0,
+        "delta": 0,
+        "scenario": 0
+      }
+    },
+    "patch": {
+      "demand_multiplier": 1.2,
+      "disrupted_route_codes": [],
+      "failed_supplier_codes": [],
+      "fuel_multiplier": 1.0,
+      "inventory_factor": 1.0,
+      "label": "Demand +20.0%",
+      "price_multiplier": 1.0
+    },
+    "solver": {
+      "allocations": [
+        {
+          "lead_time_days": 18,
+          "line_cost": 25525.5,
+          "mode": "ocean",
+          "quantity": 5500,
+          "reliability_score": 0.91,
+          "route_code": "RT-A-SIN-OC",
+          "supplier_code": "SUP-A",
+          "supplier_name": "Apex Components",
+          "transit_hours": 120.0,
+          "transport_cost_per_unit": 0.441,
+          "unit_price": 4.2,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 22,
+          "line_cost": 21965.71,
+          "mode": "ocean",
+          "quantity": 5165,
+          "reliability_score": 0.88,
+          "route_code": "RT-C-SIN-OC",
+          "supplier_code": "SUP-C",
+          "supplier_name": "Chengdu Precision",
+          "transit_hours": 140.0,
+          "transport_cost_per_unit": 0.4028,
+          "unit_price": 3.85,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 12,
+          "line_cost": 4636.8,
+          "mode": "truck",
+          "quantity": 805,
+          "reliability_score": 0.96,
+          "route_code": "RT-B-ROT-TR",
+          "supplier_code": "SUP-B",
+          "supplier_name": "Baltic Parts",
+          "transit_hours": 18.0,
+          "transport_cost_per_unit": 0.66,
+          "unit_price": 5.1,
+          "warehouse_code": "WH-ROT"
+        }
+      ],
+      "delivery_time_hours": 668.0,
+      "infeasibility": null,
+      "objective_notes": [
+        "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+        "Objective minimizes procurement + transport + holding + reliability penalty.",
+        "Quantities are solver outputs, not LLM estimates.",
+        "Low-risk constraints enforced=True"
+      ],
+      "procurement_cost": 47090.75,
+      "risk_penalty_cost": 5786.81,
+      "status": "OPTIMAL",
+      "total_cost": 52128.01,
+      "transport_cost": 5037.26,
+      "unmet_demand": 0
+    }
+  },
+  "fuel_increase": {
+    "diff": {
+      "delivery_time_hours": {
+        "baseline": 668.0,
+        "delta": 0.0,
+        "scenario": 668.0
+      },
+      "risk_score": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "total_cost": {
+        "baseline": 42868.81,
+        "delta": 615.11,
+        "scenario": 43483.92
+      },
+      "unmet_demand": {
+        "baseline": 0,
+        "delta": 0,
+        "scenario": 0
+      }
+    },
+    "patch": {
+      "demand_multiplier": 1.0,
+      "disrupted_route_codes": [],
+      "failed_supplier_codes": [],
+      "fuel_multiplier": 1.15,
+      "inventory_factor": 1.0,
+      "label": "Fuel +15.0%",
+      "price_multiplier": 1.0
+    },
+    "solver": {
+      "allocations": [
+        {
+          "lead_time_days": 18,
+          "line_cost": 25889.05,
+          "mode": "ocean",
+          "quantity": 5500,
+          "reliability_score": 0.91,
+          "route_code": "RT-A-SIN-OC",
+          "supplier_code": "SUP-A",
+          "supplier_name": "Apex Components",
+          "transit_hours": 120.0,
+          "transport_cost_per_unit": 0.5071,
+          "unit_price": 4.2,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 22,
+          "line_cost": 15807.88,
+          "mode": "ocean",
+          "quantity": 3665,
+          "reliability_score": 0.88,
+          "route_code": "RT-C-SIN-OC",
+          "supplier_code": "SUP-C",
+          "supplier_name": "Chengdu Precision",
+          "transit_hours": 140.0,
+          "transport_cost_per_unit": 0.4632,
+          "unit_price": 3.85,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 12,
+          "line_cost": 1786.99,
+          "mode": "truck",
+          "quantity": 305,
+          "reliability_score": 0.96,
+          "route_code": "RT-B-ROT-TR",
+          "supplier_code": "SUP-B",
+          "supplier_name": "Baltic Parts",
+          "transit_hours": 18.0,
+          "transport_cost_per_unit": 0.759,
+          "unit_price": 5.1,
+          "warehouse_code": "WH-ROT"
+        }
+      ],
+      "delivery_time_hours": 668.0,
+      "infeasibility": null,
+      "objective_notes": [
+        "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+        "Objective minimizes procurement + transport + holding + reliability penalty.",
+        "Quantities are solver outputs, not LLM estimates.",
+        "Low-risk constraints enforced=True"
+      ],
+      "procurement_cost": 38765.75,
+      "risk_penalty_cost": 4793.06,
+      "status": "OPTIMAL",
+      "total_cost": 43483.92,
+      "transport_cost": 4718.17,
+      "unmet_demand": 0
+    }
+  },
+  "inventory_shortage": {
+    "diff": {
+      "delivery_time_hours": {
+        "baseline": 668.0,
+        "delta": 0.0,
+        "scenario": 668.0
+      },
+      "risk_score": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "total_cost": {
+        "baseline": 42868.81,
+        "delta": 6250.33,
+        "scenario": 49119.14
+      },
+      "unmet_demand": {
+        "baseline": 0,
+        "delta": 0,
+        "scenario": 0
+      }
+    },
+    "patch": {
+      "demand_multiplier": 1.0,
+      "disrupted_route_codes": [],
+      "failed_supplier_codes": [],
+      "fuel_multiplier": 1.0,
+      "inventory_factor": 0.5,
+      "label": "Inventory 50.0% short",
+      "price_multiplier": 1.0
+    },
+    "solver": {
+      "allocations": [
+        {
+          "lead_time_days": 18,
+          "line_cost": 25520.86,
+          "mode": "ocean",
+          "quantity": 5499,
+          "reliability_score": 0.91,
+          "route_code": "RT-A-SIN-OC",
+          "supplier_code": "SUP-A",
+          "supplier_name": "Apex Components",
+          "transit_hours": 120.0,
+          "transport_cost_per_unit": 0.441,
+          "unit_price": 4.2,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 22,
+          "line_cost": 19894.6,
+          "mode": "ocean",
+          "quantity": 4678,
+          "reliability_score": 0.88,
+          "route_code": "RT-C-SIN-OC",
+          "supplier_code": "SUP-C",
+          "supplier_name": "Chengdu Precision",
+          "transit_hours": 140.0,
+          "transport_cost_per_unit": 0.4028,
+          "unit_price": 3.85,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 12,
+          "line_cost": 3703.68,
+          "mode": "truck",
+          "quantity": 643,
+          "reliability_score": 0.96,
+          "route_code": "RT-B-ROT-TR",
+          "supplier_code": "SUP-B",
+          "supplier_name": "Baltic Parts",
+          "transit_hours": 18.0,
+          "transport_cost_per_unit": 0.66,
+          "unit_price": 5.1,
+          "warehouse_code": "WH-ROT"
+        }
+      ],
+      "delivery_time_hours": 668.0,
+      "infeasibility": null,
+      "objective_notes": [
+        "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+        "Objective minimizes procurement + transport + holding + reliability penalty.",
+        "Quantities are solver outputs, not LLM estimates.",
+        "Low-risk constraints enforced=True"
+      ],
+      "procurement_cost": 44385.4,
+      "risk_penalty_cost": 5463.79,
+      "status": "OPTIMAL",
+      "total_cost": 49119.14,
+      "transport_cost": 4733.74,
+      "unmet_demand": 0
+    }
+  },
+  "price_increase": {
+    "diff": {
+      "delivery_time_hours": {
+        "baseline": 668.0,
+        "delta": 0.0,
+        "scenario": 668.0
+      },
+      "risk_score": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "total_cost": {
+        "baseline": 42868.81,
+        "delta": 3876.58,
+        "scenario": 46745.39
+      },
+      "unmet_demand": {
+        "baseline": 0,
+        "delta": 0,
+        "scenario": 0
+      }
+    },
+    "patch": {
+      "demand_multiplier": 1.0,
+      "disrupted_route_codes": [],
+      "failed_supplier_codes": [],
+      "fuel_multiplier": 1.0,
+      "inventory_factor": 1.0,
+      "label": "Price +10.0%",
+      "price_multiplier": 1.1
+    },
+    "solver": {
+      "allocations": [
+        {
+          "lead_time_days": 18,
+          "line_cost": 27835.5,
+          "mode": "ocean",
+          "quantity": 5500,
+          "reliability_score": 0.91,
+          "route_code": "RT-A-SIN-OC",
+          "supplier_code": "SUP-A",
+          "supplier_name": "Apex Components",
+          "transit_hours": 120.0,
+          "transport_cost_per_unit": 0.441,
+          "unit_price": 4.62,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 22,
+          "line_cost": 16997.54,
+          "mode": "ocean",
+          "quantity": 3665,
+          "reliability_score": 0.88,
+          "route_code": "RT-C-SIN-OC",
+          "supplier_code": "SUP-C",
+          "supplier_name": "Chengdu Precision",
+          "transit_hours": 140.0,
+          "transport_cost_per_unit": 0.4028,
+          "unit_price": 4.235,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 12,
+          "line_cost": 1912.35,
+          "mode": "truck",
+          "quantity": 305,
+          "reliability_score": 0.96,
+          "route_code": "RT-B-ROT-TR",
+          "supplier_code": "SUP-B",
+          "supplier_name": "Baltic Parts",
+          "transit_hours": 18.0,
+          "transport_cost_per_unit": 0.66,
+          "unit_price": 5.61,
+          "warehouse_code": "WH-ROT"
+        }
+      ],
+      "delivery_time_hours": 668.0,
+      "infeasibility": null,
+      "objective_notes": [
+        "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+        "Objective minimizes procurement + transport + holding + reliability penalty.",
+        "Quantities are solver outputs, not LLM estimates.",
+        "Low-risk constraints enforced=True"
+      ],
+      "procurement_cost": 42642.32,
+      "risk_penalty_cost": 5272.37,
+      "status": "OPTIMAL",
+      "total_cost": 46745.39,
+      "transport_cost": 4103.06,
+      "unmet_demand": 0
+    }
+  },
+  "route_disruption": {
+    "diff": {
+      "delivery_time_hours": {
+        "baseline": 668.0,
+        "delta": 0.0,
+        "scenario": 668.0
+      },
+      "risk_score": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "total_cost": {
+        "baseline": 42868.81,
+        "delta": 0.0,
+        "scenario": 42868.81
+      },
+      "unmet_demand": {
+        "baseline": 0,
+        "delta": 0,
+        "scenario": 0
+      }
+    },
+    "patch": {
+      "demand_multiplier": 1.0,
+      "disrupted_route_codes": [
+        "RT-C-ROT-OC"
+      ],
+      "failed_supplier_codes": [],
+      "fuel_multiplier": 1.0,
+      "inventory_factor": 1.0,
+      "label": "Route disrupted RT-C-ROT-OC",
+      "price_multiplier": 1.0
+    },
+    "solver": {
+      "allocations": [
+        {
+          "lead_time_days": 18,
+          "line_cost": 25525.5,
+          "mode": "ocean",
+          "quantity": 5500,
+          "reliability_score": 0.91,
+          "route_code": "RT-A-SIN-OC",
+          "supplier_code": "SUP-A",
+          "supplier_name": "Apex Components",
+          "transit_hours": 120.0,
+          "transport_cost_per_unit": 0.441,
+          "unit_price": 4.2,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 22,
+          "line_cost": 15586.51,
+          "mode": "ocean",
+          "quantity": 3665,
+          "reliability_score": 0.88,
+          "route_code": "RT-C-SIN-OC",
+          "supplier_code": "SUP-C",
+          "supplier_name": "Chengdu Precision",
+          "transit_hours": 140.0,
+          "transport_cost_per_unit": 0.4028,
+          "unit_price": 3.85,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 12,
+          "line_cost": 1756.8,
+          "mode": "truck",
+          "quantity": 305,
+          "reliability_score": 0.96,
+          "route_code": "RT-B-ROT-TR",
+          "supplier_code": "SUP-B",
+          "supplier_name": "Baltic Parts",
+          "transit_hours": 18.0,
+          "transport_cost_per_unit": 0.66,
+          "unit_price": 5.1,
+          "warehouse_code": "WH-ROT"
+        }
+      ],
+      "delivery_time_hours": 668.0,
+      "infeasibility": null,
+      "objective_notes": [
+        "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+        "Objective minimizes procurement + transport + holding + reliability penalty.",
+        "Quantities are solver outputs, not LLM estimates.",
+        "Low-risk constraints enforced=True"
+      ],
+      "procurement_cost": 38765.75,
+      "risk_penalty_cost": 4793.06,
+      "status": "OPTIMAL",
+      "total_cost": 42868.81,
+      "transport_cost": 4103.06,
+      "unmet_demand": 0
+    }
+  },
+  "supplier_failure": {
+    "diff": {
+      "delivery_time_hours": {
+        "baseline": 668.0,
+        "delta": -116.0,
+        "scenario": 552.0
+      },
+      "risk_score": {
+        "baseline": 42.0,
+        "delta": 0.0,
+        "scenario": 42.0
+      },
+      "total_cost": {
+        "baseline": 42868.81,
+        "delta": 3220.89,
+        "scenario": 46089.7
+      },
+      "unmet_demand": {
+        "baseline": 0,
+        "delta": 0,
+        "scenario": 0
+      }
+    },
+    "patch": {
+      "demand_multiplier": 1.0,
+      "disrupted_route_codes": [],
+      "failed_supplier_codes": [
+        "SUP-C"
+      ],
+      "fuel_multiplier": 1.0,
+      "inventory_factor": 1.0,
+      "label": "Supplier failure SUP-C",
+      "price_multiplier": 1.0
+    },
+    "solver": {
+      "allocations": [
+        {
+          "lead_time_days": 18,
+          "line_cost": 25525.5,
+          "mode": "ocean",
+          "quantity": 5500,
+          "reliability_score": 0.91,
+          "route_code": "RT-A-SIN-OC",
+          "supplier_code": "SUP-A",
+          "supplier_name": "Apex Components",
+          "transit_hours": 120.0,
+          "transport_cost_per_unit": 0.441,
+          "unit_price": 4.2,
+          "warehouse_code": "WH-SIN"
+        },
+        {
+          "lead_time_days": 16,
+          "line_cost": 17857.0,
+          "mode": "truck",
+          "quantity": 3500,
+          "reliability_score": 0.9,
+          "route_code": "RT-D-MUM-TR",
+          "supplier_code": "SUP-D",
+          "supplier_name": "Delhi Metals",
+          "transit_hours": 36.0,
+          "transport_cost_per_unit": 0.552,
+          "unit_price": 4.55,
+          "warehouse_code": "WH-MUM"
+        },
+        {
+          "lead_time_days": 12,
+          "line_cost": 2707.2,
+          "mode": "truck",
+          "quantity": 470,
+          "reliability_score": 0.96,
+          "route_code": "RT-B-ROT-TR",
+          "supplier_code": "SUP-B",
+          "supplier_name": "Baltic Parts",
+          "transit_hours": 18.0,
+          "transport_cost_per_unit": 0.66,
+          "unit_price": 5.1,
+          "warehouse_code": "WH-ROT"
+        }
+      ],
+      "delivery_time_hours": 552.0,
+      "infeasibility": null,
+      "objective_notes": [
+        "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+        "Objective minimizes procurement + transport + holding + reliability penalty.",
+        "Quantities are solver outputs, not LLM estimates.",
+        "Low-risk constraints enforced=True"
+      ],
+      "procurement_cost": 41422.0,
+      "risk_penalty_cost": 4709.22,
+      "status": "OPTIMAL",
+      "total_cost": 46089.7,
+      "transport_cost": 4667.7,
+      "unmet_demand": 0
+    }
+  }
+}

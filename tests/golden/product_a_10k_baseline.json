@@ -1,0 +1,60 @@
+{
+  "allocations": [
+    {
+      "lead_time_days": 18,
+      "line_cost": 25525.5,
+      "mode": "ocean",
+      "quantity": 5500,
+      "reliability_score": 0.91,
+      "route_code": "RT-A-SIN-OC",
+      "supplier_code": "SUP-A",
+      "supplier_name": "Apex Components",
+      "transit_hours": 120.0,
+      "transport_cost_per_unit": 0.441,
+      "unit_price": 4.2,
+      "warehouse_code": "WH-SIN"
+    },
+    {
+      "lead_time_days": 22,
+      "line_cost": 15586.51,
+      "mode": "ocean",
+      "quantity": 3665,
+      "reliability_score": 0.88,
+      "route_code": "RT-C-SIN-OC",
+      "supplier_code": "SUP-C",
+      "supplier_name": "Chengdu Precision",
+      "transit_hours": 140.0,
+      "transport_cost_per_unit": 0.4028,
+      "unit_price": 3.85,
+      "warehouse_code": "WH-SIN"
+    },
+    {
+      "lead_time_days": 12,
+      "line_cost": 1756.8,
+      "mode": "truck",
+      "quantity": 305,
+      "reliability_score": 0.96,
+      "route_code": "RT-B-ROT-TR",
+      "supplier_code": "SUP-B",
+      "supplier_name": "Baltic Parts",
+      "transit_hours": 18.0,
+      "transport_cost_per_unit": 0.66,
+      "unit_price": 5.1,
+      "warehouse_code": "WH-ROT"
+    }
+  ],
+  "delivery_time_hours": 668.0,
+  "infeasibility": null,
+  "objective_notes": [
+    "OR-Tools backend=CBC_MIXED_INTEGER_PROGRAMMING",
+    "Objective minimizes procurement + transport + holding + reliability penalty.",
+    "Quantities are solver outputs, not LLM estimates.",
+    "Low-risk constraints enforced=True"
+  ],
+  "procurement_cost": 38765.75,
+  "risk_penalty_cost": 4793.06,
+  "status": "OPTIMAL",
+  "total_cost": 42868.81,
+  "transport_cost": 4103.06,
+  "unmet_demand": 0
+}

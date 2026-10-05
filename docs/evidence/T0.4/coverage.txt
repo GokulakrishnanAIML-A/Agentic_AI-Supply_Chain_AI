@@ -1,0 +1,68 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.7, pytest-9.1.1, pluggy-1.6.0
+rootdir: E:\Agentic_AI-main\Agentic_AI-main\backend
+configfile: pytest.ini
+plugins: anyio-4.9.0, langsmith-0.4.31, cov-7.1.0
+collected 23 items
+
+backend\tests\test_api.py ssss                                           [ 17%]
+backend\tests\test_extended_verification.py ......sssss                  [ 65%]
+backend\tests\test_pipeline.py ........                                  [100%]
+
+============================== warnings summary ===============================
+C:\Users\Gokul\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464
+  C:\Users\Gokul\AppData\Local\Programs\Python\Python313\Lib\site-packages\_pytest\config\__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_default_fixture_loop_scope
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.13.7-final-0 _______________
+
+Name                                   Stmts   Miss  Cover   Missing
+--------------------------------------------------------------------
+backend\app\__init__.py                    0      0   100%
+backend\app\agents\__init__.py             7      0   100%
+backend\app\agents\demand.py              29     21    28%   11-23, 27-38
+backend\app\agents\inventory.py           19     13    32%   14-42
+backend\app\agents\risk.py                46     40    13%   16-112
+backend\app\agents\route.py               17     12    29%   14-51
+backend\app\agents\schemas.py             83      0   100%
+backend\app\agents\supplier.py            30     24    20%   16-59
+backend\app\api\__init__.py                7      5    29%   5-9
+backend\app\api\catalog.py                 8      4    50%   7-12
+backend\app\api\decisions.py              82     82     0%   1-138
+backend\app\api\health.py                 14     14     0%   1-18
+backend\app\api\schemas.py                32     32     0%   1-47
+backend\app\api\service.py                34     34     0%   1-113
+backend\app\api\whatif.py                 30     30     0%   1-56
+backend\app\core\__init__.py               0      0   100%
+backend\app\core\config.py                44      7    84%   48, 50, 55-59
+backend\app\core\logging.py                4      4     0%   1-7
+backend\app\core\paths.py                 14      1    93%   15
+backend\app\core\provenance.py            15      0   100%
+backend\app\db\__init__.py                 0      0   100%
+backend\app\db\base.py                     3      0   100%
+backend\app\db\models.py                 176      0   100%
+backend\app\db\repositories.py            39     23    41%   23-30, 34-45, 49, 59, 69-71, 81, 85, 89, 93, 97, 101
+backend\app\db\session.py                 23     16    30%   11-37
+backend\app\graph\__init__.py              2      2     0%   1-3
+backend\app\graph\graph.py                32     32     0%   1-54
+backend\app\graph\nodes.py               129    129     0%   1-298
+backend\app\graph\state.py                18     18     0%   1-21
+backend\app\llm\__init__.py                2      0   100%
+backend\app\llm\factory.py                58     16    72%   37-39, 57-74, 80, 96-97
+backend\app\main.py                       25     21    16%   7-47
+backend\app\optimization\__init__.py       2      0   100%
+backend\app\optimization\solver.py       140     11    92%   45-48, 62, 79, 95, 114, 121, 139, 191
+backend\app\rag\__init__.py                2      0   100%
+backend\app\rag\embed.py                  32     23    28%   11-12, 16-19, 23-36, 40-46
+backend\app\rag\ingest.py                 47     27    43%   16, 29-72
+backend\app\rag\search.py                 31     23    26%   11, 15-19, 23-68
+backend\app\validation\__init__.py         2      0   100%
+backend\app\validation\validator.py       43     22    49%   13-14, 28-29, 49-74
+backend\app\whatif\__init__.py             2      0   100%
+backend\app\whatif\engine.py              46      1    98%   62
+--------------------------------------------------------------------
+TOTAL                                   1369    687    50%
+================== 14 passed, 9 skipped, 1 warning in 1.47s ===================

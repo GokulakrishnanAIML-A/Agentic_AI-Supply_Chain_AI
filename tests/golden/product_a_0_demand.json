@@ -1,0 +1,14 @@
+{
+  "allocations": [],
+  "delivery_time_hours": 0.0,
+  "infeasibility": null,
+  "objective_notes": [
+    "Net requirement is 0; inventory covers demand plus safety stock."
+  ],
+  "procurement_cost": 0.0,
+  "risk_penalty_cost": 0.0,
+  "status": "OPTIMAL",
+  "total_cost": 0.0,
+  "transport_cost": 0.0,
+  "unmet_demand": 0
+}
