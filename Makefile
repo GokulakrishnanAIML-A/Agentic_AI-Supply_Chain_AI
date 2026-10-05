@@ -1,9 +1,15 @@
-.PHONY: all test eval eval-rag eval-solver eval-intent eval-forecast eval-ablation build clean
+.PHONY: all test test-cov verify eval eval-rag eval-solver eval-intent eval-forecast eval-ablation report build clean
 
 all: test eval build
 
 test:
 	python -m pytest backend/tests/ -v
+
+test-cov:
+	python -m pytest backend/tests/ --cov=backend/app --cov-report=term-missing -v
+
+verify:
+	python verify_system.py
 
 eval: eval-rag eval-solver eval-intent eval-forecast eval-ablation
 	python scripts/build_report.py
@@ -23,5 +29,11 @@ eval-forecast:
 eval-ablation:
 	python scripts/eval_ablation.py --seed 42
 
+report:
+	python scripts/build_report.py
+
 build:
 	cd frontend && npm run build
+
+clean:
+	rm -rf .pytest_cache .coverage backend/.pytest_cache frontend/dist
