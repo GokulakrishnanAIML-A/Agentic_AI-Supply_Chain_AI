@@ -1,6 +1,6 @@
 # SupplyChainAI Comprehensive Evaluation Report
 
-*Generated on 2026-10-05T14:03:24.360234+00:00 from benchmark artifacts in `results/*.json`.*
+*Generated on 2026-10-05T14:37:13.293505+00:00 from benchmark artifacts in `results/*.json`.*
 
 ---
 
@@ -24,8 +24,8 @@ Evaluated across 50 seeded scenarios encompassing demand spikes (0.2x–3.0x), s
 | **Hard Constraint Violations / Plan** | **0.0** (Target: 0) | 0.0 |
 | **Cost Gap vs Greedy** | **-2.79% cheaper** | Baseline (0.0%) |
 | **Infeasible Detection Accuracy** | **100.0%** | — |
-| **Solve Time (p50)** | **7.02 ms** | < 1 ms |
-| **Solve Time (p95)** | **14.06 ms** | < 1 ms |
+| **Solve Time (p50)** | **11.91 ms** | < 1 ms |
+| **Solve Time (p95)** | **20.6 ms** | < 1 ms |
 
 ---
 

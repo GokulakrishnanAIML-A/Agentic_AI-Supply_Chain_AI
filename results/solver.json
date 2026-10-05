@@ -1,7 +1,7 @@
 {
   "name": "solver",
-  "git_sha": "f622663b4eefd2f73231be56d14b3741952c1ca8",
-  "date": "2026-10-05T14:05:06.043910+00:00",
+  "git_sha": "3acf6e98ee9065039f21343bf445a40ee31f203c",
+  "date": "2026-10-05T14:37:10.933968+00:00",
   "seed": 42,
   "n": 50,
   "config": {
@@ -17,9 +17,9 @@
     "greedy_violations_per_plan": 0.0,
     "cost_gap_vs_greedy_pct": -2.79,
     "infeasible_detection_accuracy": 1.0,
-    "solve_time_ms_p50": 7.02,
-    "solve_time_ms_p95": 14.06,
-    "solve_time_ms_max": 48.87
+    "solve_time_ms_p50": 11.91,
+    "solve_time_ms_p95": 20.6,
+    "solve_time_ms_max": 59.62
   },
   "status": "OK",
   "notes": "OR-Tools MILP guarantees 0 hard constraint violations across all feasible plans and achieves superior landed costs vs greedy allocation."
