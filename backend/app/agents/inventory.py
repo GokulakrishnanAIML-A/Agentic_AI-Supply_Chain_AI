@@ -6,6 +6,14 @@ from app.db.repositories import inventory_for_product
 from sqlalchemy.orm import Session
 
 
+def net_requirement(demand: int, available: int, safety_total: int) -> int:
+    """Units to procure so that, after serving `demand`, stock level equals `safety_total`.
+
+    Formula: max(0, demand + safety_total - available)
+    """
+    return max(0, demand + safety_total - available)
+
+
 def run_inventory_agent(
     db: Session,
     demand: DemandResult,
@@ -30,12 +38,10 @@ def run_inventory_agent(
         )
     total_available = sum(r.available for r in rows)
     total_ss = sum(r.safety_stock for r in rows)
-    # Keep a safety-stock buffer after fulfilling demand.
-    safety_gap = max(0, total_ss - total_available)
-    net = max(0, demand.demand_to_meet - total_available + safety_gap)
+    net = net_requirement(demand.demand_to_meet, total_available, total_ss)
     notes = [
         "Available = on_hand - reserved from the inventory table.",
-        "Net requirement includes a safety-stock gap so DCs are not stripped bare.",
+        "Net requirement replenishes safety stock after fulfilling demand: max(0, demand + safety_stock - available).",
     ]
     if inventory_factor != 1.0:
         notes.append(f"What-if inventory factor applied: {inventory_factor}")
@@ -48,7 +54,8 @@ def run_inventory_agent(
         provenance={
             "total_available": Provenanced(value=total_available, source="database"),
             "net_requirement": Provenanced(
-                value=net, source="agent_reasoning", note="forecast/user demand minus available plus safety gap"
+                value=net, source="agent_reasoning", note="demand plus safety stock minus available"
             ),
         },
     )
+

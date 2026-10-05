@@ -83,3 +83,19 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - [x] Goldens captured; determinism proven (empty diff).
 - [x] `AUDIT_DISCREPANCIES.md` has a resolution per row (9/9 items).
 - [x] No code changes yet (tooling, golden files, and evidence only).
+
+---
+
+## T1.1 — Fix net requirement (B-01)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p1-correctness`
+- **VERIFY findings:** Located double-counting bug in `backend/app/agents/inventory.py` lines 34–35 where `safety_gap = max(0, total_ss - total_available)` was added to `demand - total_available`, producing `D + SS - 2*avail` when `avail < SS`.
+- **DECISION NEEDED:** Policy = safety stock must be fully replenished after serving demand (implemented).
+- **Tests added:** `backend/tests/test_inventory.py::{test_no_double_count, test_surplus_is_zero, test_ss_topup, test_zero_everything}`
+- **Tests changed (R3 justification):** `backend/tests/conftest.py` lines 106–107 updated to use the exact same pure `net_requirement` formula `max(0, demand + total_ss - total_available)`.
+- **Gate G0:** pytest 18 passed / 9 skipped (27 collected) · diff stat restricted to inventory.py, conftest.py, and test_inventory.py.
+- **Evidence:** `docs/evidence/T1.1/test_inventory_output.txt`, `docs/evidence/T1.1/git_diff_stat.txt`
+- **Module audit row updated:** `agents/inventory.py` invariant verified.
+- **Issues dispositioned:** B-01 FIXED.
+- **Notes / follow-ups:** Proceed to T1.2 (Solver formulation audit and invariant testing).
+

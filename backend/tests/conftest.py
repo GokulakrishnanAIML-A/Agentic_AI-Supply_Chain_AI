@@ -103,8 +103,7 @@ def product_a_bundle(
         )
     total_available = sum(r.available for r in inv_rows)
     total_ss = sum(r.safety_stock for r in inv_rows)
-    safety_gap = max(0, total_ss - total_available)
-    net = max(0, demand_to_meet - total_available + safety_gap)
+    net = max(0, demand_to_meet + total_ss - total_available)
 
     return AgentBundle(
         demand=DemandResult(
