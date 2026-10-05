@@ -38,6 +38,21 @@ class Settings(BaseSettings):
     risk_penalty_weight: float = 1.25
     max_replan: int = 2
 
+    # HITL reviewer authentication: "planner_name:api_key,..."
+    planner_keys: str = "alice:key_alice,bob:key_bob,lead_planner:secret_key_123"
+
+    @property
+    def planners(self) -> dict[str, str]:
+        """Maps api_key -> planner_name"""
+        res: dict[str, str] = {}
+        for entry in self.planner_keys.split(","):
+            entry = entry.strip()
+            if ":" in entry:
+                name, key = entry.split(":", 1)
+                res[key.strip()] = name.strip()
+        return res
+
+
     @property
     def resolved_gemini_key(self) -> str:
         return self.gemini_api_key or self.google_api_key

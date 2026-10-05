@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from app.agents.schemas import AgentBundle
-from app.optimization.solver import SolverResult
+from app.optimization.solver import SolverResult, evaluate_plan
+
 
 
 def validate_plan(bundle: AgentBundle, solver: SolverResult) -> dict:
@@ -65,40 +66,28 @@ def validate_plan(bundle: AgentBundle, solver: SolverResult) -> dict:
     }
 
 
-
 def validate_override_allocations(
     result_json: dict,
     override_allocations: list[dict],
+    optimal_cost: float | None = None,
+    acknowledge_policy_breach: bool = False,
 ) -> dict:
-    """Validate that human-override allocations do not violate hard constraints.
+    """Validate human-override allocations using shared solver predicates and evaluate cost/risk."""
+    eval_res = evaluate_plan(
+        bundle_or_data=result_json,
+        allocations_raw=override_allocations,
+        optimal_cost=optimal_cost,
+        acknowledge_policy_breach=acknowledge_policy_breach,
+    )
+    return {
+        "ok": eval_res["ok"],
+        "issues": eval_res["violations"],
+        "violations": eval_res["violations"],
+        "policy_breaches_acknowledged": eval_res["policy_breaches_acknowledged"],
+        "total_cost": eval_res["total_cost"],
+        "cost_delta_vs_optimal": eval_res["cost_delta_vs_optimal"],
+        "delivery_time_hours": eval_res["delivery_time_hours"],
+        "plan_risk": eval_res["plan_risk"],
+        "evaluation": eval_res,
+    }
 
-    Checks:
-    1. Per-supplier volume ≤ monthly capacity.
-    2. Total override volume ≥ net procurement requirement.
-    """
-    issues: list[str] = []
-    suppliers_data = result_json.get("suppliers") or {}
-    offers = suppliers_data.get("offers") or []
-    cap_map = {s.get("supplier_code", ""): s.get("monthly_capacity", 0) for s in offers}
-
-    by_sup: dict[str, int] = {}
-    for alloc in override_allocations:
-        code = alloc.get("supplier_code", "")
-        qty = int(alloc.get("units", 0))
-        by_sup[code] = by_sup.get(code, 0) + qty
-
-    for code, qty in by_sup.items():
-        if code in cap_map and qty > cap_map[code]:
-            issues.append(
-                f"{code}: override quantity {qty} exceeds monthly capacity {cap_map[code]}"
-            )
-
-    total = sum(int(a.get("units", 0)) for a in override_allocations)
-    inv = result_json.get("inventory") or {}
-    net_req = int(inv.get("net_requirement") or 0)
-    if net_req > 0 and total < net_req:
-        issues.append(
-            f"Total override volume {total} is below net requirement {net_req}"
-        )
-
-    return {"ok": len(issues) == 0, "issues": issues}

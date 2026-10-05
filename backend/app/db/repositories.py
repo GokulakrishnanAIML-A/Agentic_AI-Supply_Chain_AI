@@ -6,6 +6,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, joinedload
 
 from app.db.models import (
+    DecisionEvent,
     Inventory,
     MarketPrice,
     Order,
@@ -17,6 +18,7 @@ from app.db.models import (
     Warehouse,
     WeatherEvent,
 )
+
 
 
 def resolve_product(db: Session, query: str) -> Product | None:
@@ -99,3 +101,34 @@ def list_suppliers(db: Session) -> list[Supplier]:
 
 def list_warehouses(db: Session) -> list[Warehouse]:
     return list(db.scalars(select(Warehouse).order_by(Warehouse.code)))
+
+
+def append_event(
+    db: Session,
+    run_id: int,
+    actor: str,
+    action: str,
+    payload: dict | None = None,
+) -> DecisionEvent:
+    """Append-only decision audit event. No updates or deletes are permitted."""
+    event = DecisionEvent(
+        run_id=run_id,
+        actor=actor,
+        action=action,
+        payload=payload or {},
+    )
+    db.add(event)
+    db.commit()
+    db.refresh(event)
+    return event
+
+
+def get_events_for_run(db: Session, run_id: int) -> list[DecisionEvent]:
+    return list(
+        db.scalars(
+            select(DecisionEvent)
+            .where(DecisionEvent.run_id == run_id)
+            .order_by(DecisionEvent.id)
+        )
+    )
+

@@ -5,6 +5,7 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from app.db.models import DecisionRun
+from app.db.repositories import append_event, get_events_for_run
 from app.graph.graph import run_pipeline
 
 
@@ -41,6 +42,16 @@ def persist_run(
     db.add(run)
     db.commit()
     db.refresh(run)
+
+    # Append CREATED audit event
+    append_event(
+        db,
+        run_id=run.id,
+        actor="system",
+        action="CREATED",
+        payload={"query": query, "status": run.status, "parent_run_id": parent_run_id},
+    )
+
     return run
 
 
@@ -48,6 +59,7 @@ def to_response(
     run: DecisionRun,
     what_if: dict | None = None,
     rejection_parent_id: int | None = None,
+    db: Session | None = None,
 ) -> dict[str, Any]:
     r = run.result_json or {}
     rec = r.get("recommendation") or {}
@@ -64,6 +76,44 @@ def to_response(
         validation["hitl_comments"] = run.hitl_comments
     elif "hitl_status" not in validation:
         validation["hitl_status"] = run.hitl_status or "PENDING_REVIEW"
+
+    # Server-side recommendation lock (T3.5)
+    is_finalized = run.hitl_status in ("APPROVED", "APPROVED_WITH_OVERRIDE")
+    execution_locked = not is_finalized
+
+    rec_export = dict(rec)
+    if execution_locked:
+        # Redact downstream automated execution steps until signed off
+        rec_export["execution_locked"] = True
+        rec_export["execution_steps"] = [
+            "[LOCKED] Action plan and PO generation locked pending human approval."
+        ]
+        rec_export["execution_status"] = "LOCKED_PENDING_REVIEW"
+    else:
+        rec_export["execution_locked"] = False
+        rec_export["execution_status"] = "APPROVED_READY_FOR_EXECUTION"
+
+    # Retrieve audit events timeline
+    events_list = []
+    if hasattr(run, "events") and run.events:
+        for ev in run.events:
+            events_list.append({
+                "id": ev.id,
+                "actor": ev.actor,
+                "action": ev.action,
+                "payload": ev.payload,
+                "created_at": ev.created_at.isoformat() if ev.created_at else None,
+            })
+    elif db is not None:
+        raw_events = get_events_for_run(db, run.id)
+        for ev in raw_events:
+            events_list.append({
+                "id": ev.id,
+                "actor": ev.actor,
+                "action": ev.action,
+                "payload": ev.payload,
+                "created_at": ev.created_at.isoformat() if ev.created_at else None,
+            })
 
     resp = {
         "run_id": run.id,
@@ -96,10 +146,12 @@ def to_response(
         "risk_score": rec.get("risk_score") if rec.get("risk_score") is not None else risk.get("score"),
         "optimization_status": rec.get("optimization_status") or solver.get("status"),
         "retrieved_evidence": r.get("evidence") or [],
-        "explainable_recommendation": rec,
+        "explainable_recommendation": rec_export,
         "agent_trace": r.get("trace") or [],
         "validation": validation,
         "what_if": what_if,
+        "events": events_list,
+        "execution_locked": execution_locked,
         "data_disclaimer": rec.get("data_disclaimer")
         or "SYNTHETIC DATA — for demo only.",
     }
@@ -111,3 +163,4 @@ def to_response(
 def execute_decision(db: Session, query: str, patch: dict | None = None, parent_id: int | None = None) -> DecisionRun:
     state = run_pipeline(db, query, patch=patch)
     return persist_run(db, query, dict(state), parent_run_id=parent_id)
+

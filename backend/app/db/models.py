@@ -249,3 +249,21 @@ class DecisionRun(Base):
     hitl_reviewed_by: Mapped[str | None] = mapped_column(String(128), nullable=True)
     hitl_reviewed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     hitl_comments: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    events: Mapped[list[DecisionEvent]] = relationship(
+        back_populates="run", cascade="all, delete-orphan", order_by="DecisionEvent.id"
+    )
+
+
+class DecisionEvent(Base):
+    __tablename__ = "decision_events"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    run_id: Mapped[int] = mapped_column(ForeignKey("decision_runs.id"), nullable=False, index=True)
+    actor: Mapped[str] = mapped_column(String(128), nullable=False)
+    action: Mapped[str] = mapped_column(String(32), nullable=False)  # CREATED | APPROVE | REJECT | OVERRIDE | REPLAN | WHATIF
+    payload: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+
+    run: Mapped[DecisionRun] = relationship(back_populates="events")
+

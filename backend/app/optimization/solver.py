@@ -260,3 +260,215 @@ def solve_bundle(
             f"Low-risk constraints enforced={enforce_low_risk}",
         ],
     )
+
+
+def evaluate_plan(
+    bundle_or_data: AgentBundle | dict,
+    allocations_raw: list[dict] | list[Allocation],
+    optimal_cost: float | None = None,
+    risk_weight: float | None = None,
+    acknowledge_policy_breach: bool = False,
+) -> dict:
+    """Evaluate an allocation plan against all solver constraints and cost functions.
+
+    Returns:
+      {
+        "ok": bool,
+        "violations": list[str],
+        "policy_breaches_acknowledged": list[str],
+        "total_cost": float,
+        "procurement_cost": float,
+        "transport_cost": float,
+        "risk_penalty_cost": float,
+        "delivery_time_hours": float,
+        "plan_risk": float,
+        "cost_delta_vs_optimal": float,
+        "filled": int,
+        "net_requirement": int,
+      }
+    """
+    risk_weight = settings.risk_penalty_weight if risk_weight is None else risk_weight
+    violations: list[str] = []
+    policy_breaches: list[str] = []
+
+    # Extract reference maps depending on whether bundle or dict is provided
+    if isinstance(bundle_or_data, AgentBundle):
+        offers = {o.supplier_code: o for o in bundle_or_data.suppliers.offers}
+        routes = {r.code: r for r in bundle_or_data.routes.routes}
+        routes_by_pair = {(r.supplier_code if hasattr(r, 'supplier_code') else '', r.warehouse_code): r for r in bundle_or_data.routes.routes}
+        inv_map = {r.warehouse_code: r for r in bundle_or_data.inventory.rows}
+        net_req = bundle_or_data.inventory.net_requirement
+    else:
+        # Dictionary structure (e.g. from result_json)
+        sup_data = bundle_or_data.get("suppliers") or {}
+        raw_offers = sup_data.get("offers") or []
+        offers = {
+            o.get("supplier_code"): type("OfferObj", (), o)()
+            for o in raw_offers if o.get("supplier_code")
+        }
+        rt_data = bundle_or_data.get("routes") or {}
+        raw_routes = rt_data.get("routes") if isinstance(rt_data, dict) else (rt_data if isinstance(rt_data, list) else [])
+        routes = {
+            (r.get("code") or r.get("route_code")): type("RouteObj", (), r)()
+            for r in raw_routes if (r.get("code") or r.get("route_code"))
+        }
+        routes_by_pair = {
+            (r.get("supplier_code", ""), r.get("warehouse_code", "")): type("RouteObj", (), r)()
+            for r in raw_routes if (r.get("supplier_code") and r.get("warehouse_code"))
+        }
+        inv_data = bundle_or_data.get("inventory") or {}
+        raw_inv = inv_data.get("rows") or []
+        inv_map = {
+            r.get("warehouse_code"): type("InvObj", (), r)()
+            for r in raw_inv if r.get("warehouse_code")
+        }
+        net_req = int(inv_data.get("net_requirement") or 0)
+
+    # Normalize allocations
+    norm_allocs = []
+    for a in allocations_raw:
+        if isinstance(a, Allocation):
+            sup_code = a.supplier_code
+            wh_code = a.warehouse_code
+            rt_code = a.route_code
+            qty = a.quantity
+            u_price = a.unit_price
+            tr_cost = a.transport_cost_per_unit
+            lead_days = a.lead_time_days
+            tr_hours = a.transit_hours
+            rel = a.reliability_score
+        else:
+            sup_code = a.get("supplier_code", "")
+            wh_code = a.get("warehouse_code", "WH-CENTRAL")
+            rt_code = a.get("route_code", "")
+            qty = int(a.get("quantity") if a.get("quantity") is not None else a.get("units", 0))
+            offer = offers.get(sup_code)
+            route = routes.get(rt_code) or routes_by_pair.get((sup_code, wh_code))
+            u_price = float(a.get("unit_price") or (getattr(offer, "unit_price", 0.0) if offer else 0.0))
+            tr_cost = float(a.get("transport_cost_per_unit") or (getattr(route, "effective_cost_per_unit", getattr(route, "cost_per_unit", 0.0)) if route else 0.0))
+            lead_days = int(a.get("lead_time_days") or (getattr(offer, "lead_time_days", 0) if offer else 0))
+            tr_hours = float(a.get("transit_hours") or (getattr(route, "transit_hours", 0.0) if route else 0.0))
+            rel = float(a.get("reliability_score") or (getattr(offer, "reliability_score", 0.85) if offer else 0.85))
+
+        if qty > 0:
+            norm_allocs.append({
+                "supplier_code": sup_code,
+                "warehouse_code": wh_code,
+                "route_code": rt_code,
+                "quantity": qty,
+                "unit_price": u_price,
+                "transport_cost_per_unit": tr_cost,
+                "lead_time_days": lead_days,
+                "transit_hours": tr_hours,
+                "reliability_score": rel,
+            })
+
+    filled = sum(a["quantity"] for a in norm_allocs)
+
+    # 1. Total demand fulfillment check
+    if filled < net_req:
+        violations.append(f"Allocation {filled} below net requirement {net_req}")
+
+    # 2. Supplier capacity and MOQ check
+    by_sup: dict[str, int] = {}
+    for a in norm_allocs:
+        by_sup[a["supplier_code"]] = by_sup.get(a["supplier_code"], 0) + a["quantity"]
+
+    for sup_code, qty in by_sup.items():
+        offer = offers.get(sup_code)
+        if offer:
+            cap = getattr(offer, "monthly_capacity", float("inf"))
+            moq = getattr(offer, "moq", 1)
+            if qty > cap:
+                violations.append(f"{sup_code} allocated {qty} over capacity {cap}")
+            if qty < moq:
+                violations.append(f"{sup_code} allocated {qty} below minimum order quantity (MOQ) {moq}")
+        else:
+            violations.append(f"Unknown or ineligible supplier {sup_code}")
+
+    # 3. Warehouse capacity check
+    by_wh: dict[str, int] = {}
+    for a in norm_allocs:
+        by_wh[a["warehouse_code"]] = by_wh.get(a["warehouse_code"], 0) + a["quantity"]
+
+    for wh_code, qty in by_wh.items():
+        inv = inv_map.get(wh_code)
+        if inv:
+            cap = getattr(inv, "capacity_units", float("inf"))
+            on_hand = getattr(inv, "on_hand", 0)
+            remaining = max(0, cap - on_hand)
+            if qty > remaining:
+                violations.append(f"Warehouse {wh_code} allocated {qty} over remaining capacity {remaining}")
+
+    # 4. Route capacity check
+    by_rt: dict[str, int] = {}
+    for a in norm_allocs:
+        if a["route_code"]:
+            by_rt[a["route_code"]] = by_rt.get(a["route_code"], 0) + a["quantity"]
+
+    for rt_code, qty in by_rt.items():
+        rt = routes.get(rt_code)
+        if rt:
+            cap = getattr(rt, "capacity_units", float("inf"))
+            if qty > cap:
+                violations.append(f"Route {rt_code} allocated {qty} over capacity {cap}")
+
+    # 5. Policy / Concentration checks
+    if filled > 0:
+        for sup_code, qty in by_sup.items():
+            if qty > 0.60 * filled:
+                policy_breaches.append(
+                    f"Supplier {sup_code} share {qty/filled:.1%} exceeds concentration policy limit of 60%"
+                )
+        high_risk_qty = sum(
+            qty for sup_code, qty in by_sup.items()
+            if getattr(offers.get(sup_code), "risk_tier", "medium") == "high"
+        )
+        if high_risk_qty > 0.15 * filled:
+            policy_breaches.append(
+                f"High-risk supplier allocation {high_risk_qty/filled:.1%} exceeds policy limit of 15%"
+            )
+        weighted_rel = sum(a["quantity"] * a["reliability_score"] for a in norm_allocs) / filled
+        if weighted_rel < 0.90:
+            policy_breaches.append(
+                f"Average supplier reliability {weighted_rel:.1%} is below policy minimum 90%"
+            )
+
+    if policy_breaches:
+        if acknowledge_policy_breach:
+            # Acknowledged -> not a blocking violation
+            pass
+        else:
+            violations.extend(policy_breaches)
+
+    # 6. Cost calculations
+    proc_cost = sum(a["quantity"] * a["unit_price"] for a in norm_allocs)
+    trans_cost = sum(a["quantity"] * a["transport_cost_per_unit"] for a in norm_allocs)
+    pen_cost = sum(
+        a["quantity"] * risk_weight * (1.0 - a["reliability_score"]) * a["unit_price"]
+        for a in norm_allocs
+    )
+    total_cost = round(proc_cost + trans_cost, 2)
+    lead_time_hours = max(
+        (a["lead_time_days"] * 24 + a["transit_hours"] for a in norm_allocs),
+        default=0.0,
+    )
+    avg_plan_risk = round(1.0 - (sum(a["quantity"] * a["reliability_score"] for a in norm_allocs) / filled), 4) if filled > 0 else 0.0
+
+    cost_delta = round(total_cost - optimal_cost, 2) if optimal_cost is not None else 0.0
+
+    return {
+        "ok": len(violations) == 0,
+        "violations": violations,
+        "policy_breaches_acknowledged": policy_breaches if acknowledge_policy_breach else [],
+        "total_cost": total_cost,
+        "procurement_cost": round(proc_cost, 2),
+        "transport_cost": round(trans_cost, 2),
+        "risk_penalty_cost": round(pen_cost, 2),
+        "delivery_time_hours": round(lead_time_hours, 1),
+        "plan_risk": avg_plan_risk,
+        "cost_delta_vs_optimal": cost_delta,
+        "filled": filled,
+        "net_requirement": net_req,
+    }
+

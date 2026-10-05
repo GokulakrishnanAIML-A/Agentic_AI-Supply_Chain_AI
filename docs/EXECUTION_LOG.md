@@ -265,6 +265,101 @@ Living log of all task executions following `SupplyChainAI_FIX_AND_EXECUTION_PLA
 - [x] Explanation faithfulness guard active and tested.
 - [x] LLM-cannot-change-numbers mathematical invariance test passing.
 
+---
+
+## T3.1 — Append-only audit events (B-09)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p3-governance`
+- **VERIFY findings:** Created `decision_events` table in `backend/app/db/models.py` with foreign key to `decision_runs.id`, `actor`, `action` (CREATED | APPROVE | REJECT | OVERRIDE | REPLAN | WHATIF), `payload` (JSONB), and `created_at` (TIMESTAMPTZ). Exposed `append_event()` and `get_events_for_run()` in `backend/app/db/repositories.py`. Maintained `hitl_*` columns on `decision_runs` as a cached projection of the latest audit event.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_hitl.py::test_append_event_and_history`.
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T3/hitl_tests_output.txt`, `docs/evidence/T3/git_diff_stat.txt`
+- **Module audit row updated:** `db/models.py`, `db/repositories.py` verified.
+- **Issues dispositioned:** B-09 append-only audit event logging implemented.
+
+---
+
+## T3.2 — Authenticated reviewer identity (B-09)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p3-governance`
+- **VERIFY findings:** Implemented `current_planner` dependency in `backend/app/api/deps.py` extracting reviewer identity from `X-API-Key` mapped via `settings.planners`. Updated `.env.example` and `Settings.planner_keys`. Request without valid key raises 401; request body field `planner_name` is ignored in favor of token.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_hitl.py::test_current_planner_auth`.
+- **Tests changed:** None.
+- **Gate G0:** Passed (401 on missing or invalid key).
+- **Evidence:** `docs/evidence/T3/hitl_tests_output.txt`
+- **Module audit row updated:** `api/deps.py`, `core/config.py` verified.
+- **Issues dispositioned:** B-09 reviewer authentication implemented.
+
+---
+
+## T3.3 — Meaningful reject handling (B-09)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p3-governance`
+- **VERIFY findings:** Updated `backend/app/api/decisions.py` and `backend/app/api/schemas.py`. Defined `RejectReason` (with `exclude_suppliers`, `max_supplier_share`, `force_low_risk`, `comment`). When structured constraints are provided, triggers re-optimization with child run linked via `parent_run_id` and records `REJECT` event. When comment-only, records `REJECT` event without re-running.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_hitl.py::test_reject_comment_only`.
+- **Tests changed:** None.
+- **Gate G0:** Passed.
+- **Evidence:** `docs/evidence/T3/hitl_tests_output.txt`
+- **Module audit row updated:** `api/decisions.py`, `api/schemas.py` verified.
+- **Issues dispositioned:** B-09 meaningful reject handling implemented.
+
+---
+
+## T3.4 — Full-fidelity override validation (B-09)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p3-governance`
+- **VERIFY findings:** Added `evaluate_plan()` to `backend/app/optimization/solver.py` and updated `backend/app/validation/validator.py`. Validates MOQ, supplier monthly capacity, warehouse remaining space, and concentration policy limits. Policy breaches require `acknowledge_policy_breach=True`. Calculates `cost_delta_vs_optimal` ($\ge 0$).
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_hitl.py::{test_override_valid, test_override_moq_breach_rejected, test_override_capacity_breach_rejected, test_override_concentration_breach_policy}`.
+- **Tests changed:** None.
+- **Gate G0:** Passed (all violation and acknowledgment scenarios verified).
+- **Evidence:** `docs/evidence/T3/hitl_tests_output.txt`
+- **Module audit row updated:** `optimization/solver.py`, `validation/validator.py` verified.
+- **Issues dispositioned:** B-09 full-fidelity override validation implemented.
+
+---
+
+## T3.5 — Server-side recommendation lock & UI hardening (B-09, B-12)
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p3-governance`
+- **VERIFY findings:** In `backend/app/api/service.py`, enforced server-side recommendation lock: downstream execution steps and PO plans are redacted/stamped `[LOCKED]` while `hitl_status == 'PENDING_REVIEW'`. Updated `frontend/src/App.tsx` and `frontend/src/api/client.ts` with degraded mode banner, split risk metrics, node badges, structured reject drawer, manual override editor with real-time feedback, and audit events timeline.
+- **DECISION NEEDED:** None.
+- **Tests added:** `backend/tests/test_hitl.py::test_server_side_recommendation_lock`, frontend `npm run build` test.
+- **Tests changed:** None.
+- **Gate G0:** Passed (clean `vite build` production bundle generated in 1.6s).
+- **Evidence:** `docs/evidence/T3/hitl_tests_output.txt`, `docs/evidence/T3/git_diff_stat.txt`
+- **Module audit row updated:** `api/service.py`, `frontend/src/App.tsx` verified.
+- **Issues dispositioned:** B-09 and B-12 recommendation lock and UI verified.
+
+---
+
+## T3.6 — HITL test pack & coverage gate
+- **Date/Agent:** 2026-10-05 / Antigravity Agent
+- **Branch/Commit:** `fix/p3-governance`
+- **VERIFY findings:** Built comprehensive test suite covering all 9 HITL governance paths in `backend/tests/test_hitl.py`. Total test suite reached 35 passed unit/invariant/HITL tests with 72% overall statement coverage.
+- **DECISION NEEDED:** None.
+- **Tests added:** 9 test cases in `backend/tests/test_hitl.py`.
+- **Tests changed:** None.
+- **Gate G0:** 9/9 HITL tests passed in 1.44s · total suite 35/35 passed in 16.18s · 72% coverage.
+- **Evidence:** `docs/evidence/T3/hitl_tests_output.txt`
+- **Module audit row updated:** Phase 3 complete.
+- **Issues dispositioned:** Phase 3 governance and audit requirements fulfilled.
+
+---
+
+## PHASE 3 GATE SUMMARY: PASSED ✅
+- [x] `decision_events` append-only audit table and repository functions active.
+- [x] Reviewer authentication via `X-API-Key` enforced; forged body names ignored.
+- [x] Meaningful reject with structured scenario patches re-runs; comment-only logs without re-run.
+- [x] Full-fidelity manual override evaluates exact solver predicates and reports `cost_delta_vs_optimal`.
+- [x] Server-side recommendation lock redacts execution plan until approved; frontend UI updated and builds cleanly (`vite build` 0 errors).
+- [x] 9/9 HITL test suite cases pass; test suite coverage increased to 72%.
+
+
 
 
 

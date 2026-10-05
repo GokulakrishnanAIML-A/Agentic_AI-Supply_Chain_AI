@@ -20,11 +20,20 @@ class WhatIfBody(WhatIfRequest):
     query: str | None = None
 
 
+class RejectReason(BaseModel):
+    exclude_suppliers: list[str] = Field(default_factory=list)
+    max_supplier_share: float | None = Field(default=None, gt=0, le=1.0)
+    force_low_risk: bool = False
+    comment: str = ""
+
+
 class HITLActionRequest(BaseModel):
     action: str = Field(description="approve, reject, or override")
-    planner_name: str = "Lead Supply Planner"
+    planner_name: str | None = None  # Body value ignored; extracted from auth token
     comments: str = "Verified constraints and market viability"
     override_allocations: list[dict[str, Any]] | None = None
+    reject_reason: RejectReason | None = None
+    acknowledge_policy_breach: bool = False
 
 
 class DecisionResponse(BaseModel):
@@ -44,4 +53,7 @@ class DecisionResponse(BaseModel):
     validation: dict[str, Any]
     what_if: dict[str, Any] | None = None
     rejection_parent_id: int | None = None
+    events: list[dict[str, Any]] = Field(default_factory=list)
+    execution_locked: bool = False
     data_disclaimer: str
+
